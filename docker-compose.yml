@@ -3,7 +3,7 @@ services:
   zookeeper:
     image: wurstmeister/zookeeper:latest
     ports:
-      - "2181:2181"
+    - "2181:2181"
     environment:
       SERVICE_NAME: zookeeper
       SERVICE_TAGS: monitoring
@@ -23,7 +23,7 @@ services:
       SERVICE_NAME: kafka
       SERVICE_TAGS: monitoring
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+    - /var/run/docker.sock:/var/run/docker.sock
     networks:
     - widget_overlay_net
     deploy:
