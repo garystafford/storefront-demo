@@ -7,7 +7,7 @@ set -e
 docker-machine env manager1
 eval $(docker-machine env manager1)
 
-export CONSUL_SERVER=$(docker-machine ip $(docker node ls | grep Leader | awk '{print $3}'))
+export KAFKA_ADVERTISED_HOST_NAME=$(docker-machine ip worker3)
 
 docker stack deploy --compose-file=docker-compose.yml kafka_stack
 
