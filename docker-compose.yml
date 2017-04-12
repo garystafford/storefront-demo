@@ -22,6 +22,7 @@ services:
     environment:
       KAFKA_ADVERTISED_HOST_NAME: ${KAFKA_ADVERTISED_HOST_NAME}
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "test:1:1"
       SERVICE_NAME: kafka
       SERVICE_TAGS: monitoring
     volumes:
