@@ -15,4 +15,7 @@ echo stat | nc zookeeper 2181
 echo mntr | nc zookeeper 2181
 echo isro | nc zookeeper 2181
 echo srvr | nc zookeeper 2181
+
+docker exec -it  $(docker ps | grep kafka_stack_kafka | awk '{print $NF}') sh
+
 ```

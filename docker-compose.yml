@@ -3,7 +3,7 @@ version: '3.0'
 services:
   zookeeper:
     image: wurstmeister/zookeeper:latest
-    hostname: zookeeper
+    # hostname: zookeeper
     ports:
     - 2181:2181
     environment:
@@ -18,7 +18,7 @@ services:
 
   kafka:
     image: wurstmeister/kafka:latest
-    hostname: kafka
+    # hostname: kafka
     depends_on:
     - zookeeper
     ports:
@@ -29,13 +29,13 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: ${KAFKA_ADVERTISED_HOST_NAME}:2181 #"zookeeper:2181"
       KAFKA_CREATE_TOPICS: "test:1:1"
       KAFKA_ADVERTISED_PORT: 9092
-      KAFKA_JMX_OPTS: "
-        -Dcom.sun.management.jmxremote
-        -Dcom.sun.management.jmxremote.authenticate=false
-        -Dcom.sun.management.jmxremote.ssl=false
-        -Djava.rmi.server.hostname=${KAFKA_ADVERTISED_HOST_NAME}
-        -Dcom.sun.management.jmxremote.rmi.port=1099"
-      JMX_PORT: 1099
+      # KAFKA_JMX_OPTS: "
+      #   -Dcom.sun.management.jmxremote
+      #   -Dcom.sun.management.jmxremote.authenticate=false
+      #   -Dcom.sun.management.jmxremote.ssl=false
+      #   -Djava.rmi.server.hostname=${KAFKA_ADVERTISED_HOST_NAME}
+      #   -Dcom.sun.management.jmxremote.rmi.port=1099"
+      # JMX_PORT: 1099
       SERVICE_NAME: kafka
       SERVICE_TAGS: monitoring
     volumes:
