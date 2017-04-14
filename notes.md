@@ -17,11 +17,11 @@ echo isro | nc zookeeper 2181
 echo srvr | nc zookeeper 2181
 
 docker exec -it  $(docker ps | grep kafka_stack_kafka | awk '{print $NF}') sh
-cd /opt/kafka_2.12-0.10.2.0
+cd /opt/kafka_2.12-0.10.2.0/bin
 
-wget --header "Content-Type: application/vnd.kafka.binary.v1+json" \
-  --post-data='{"records":[{"value":"S2Fma2E="}]}' "http://192.168.99.105:9092/topics/test"
-wget "http://localhost:9092/topics"
+# wget --header "Content-Type: application/vnd.kafka.binary.v1+json" \
+#   --post-data='{"records":[{"value":"S2Fma2E="}]}' "http://192.168.99.105:9092/topics/test"
+# wget "http://localhost:9092/topics"
 
 kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic test
 kafka-topics.sh --list --zookeeper zookeeper:2181
@@ -29,7 +29,7 @@ kafka-topics.sh --describe --zookeeper zookeeper:2181 --topic test
 kafka-console-producer.sh --broker-list localhost:9092 --topic test
 
 
-bin/kafka-topics.sh --create \
+kafka-topics.sh --create \
   --zookeeper zookeeper:2181 \
   --replication-factor 1 \
   --partitions 1 \
@@ -38,8 +38,10 @@ bin/kafka-topics.sh --create \
 kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic output
 kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic output
 
-java -jar time-source.jar \
+java -jar kafak-service-0.1.0.jar \
   --spring.cloud.stream.kafka.binder.brokers=192.168.99.105 \
-  --spring.cloud.stream.metrics.properties=spring.application** \
-  --spring.metrics.export.includes=integration.channel.input**,integration.channel.output**
+  --spring.cloud.stream.kafka.binder.defaultBrokerPort=9200 \
+  --spring.cloud.stream.kafka.binder.zkNodes=192.168.99.105 \
+  --spring.cloud.stream.kafka.binder.defaultZkPort=2181
+
 ```
