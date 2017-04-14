@@ -35,5 +35,11 @@ bin/kafka-topics.sh --create \
   --partitions 1 \
   --topic streams-file-input
 
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic output
+kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic output
+kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic output
+
+java -jar time-source.jar \
+  --spring.cloud.stream.kafka.binder.brokers=192.168.99.105 \
+  --spring.cloud.stream.metrics.properties=spring.application** \
+  --spring.metrics.export.includes=integration.channel.input**,integration.channel.output**
 ```
