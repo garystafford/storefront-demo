@@ -37,11 +37,11 @@ kafka-topics.sh --create \
   --partitions 1 \
   --topic streams-file-input
 
-  kafka-topics.sh --create \
-    --zookeeper zookeeper:2181 \
-    --replication-factor 1 \
-    --partitions 2 \
-    --topic output
+kafka-topics.sh --create \
+  --zookeeper zookeeper:2181 \
+  --replication-factor 1 \
+  --partitions 2 \
+  --topic output
 
 kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic output
 kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic output

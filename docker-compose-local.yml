@@ -14,11 +14,11 @@ services:
     depends_on:
     - zookeeper
     expose:
-     - "9092"
+    - "9092"
     ports:
     - "9092:9092/tcp"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CREATE_TOPICS: "test:1:1"
       KAFKA_ADVERTISED_PORT: 9092
