@@ -1,0 +1,57 @@
+version: '3.0'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    # hostname: zookeeper
+    ports:
+    - "2181:2181/tcp"
+    environment:
+      SERVICE_NAME: zookeeper
+      SERVICE_TAGS: monitoring
+    # deploy:
+    #   replicas: 1
+    #   placement:
+    #     constraints: [node.hostname == worker3]
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    # hostname: kafka
+    depends_on:
+    - zookeeper
+    expose:
+     - "9092"
+    #  - "1099"
+    ports:
+    - "9092:9092/tcp"
+    # - "1099:1099"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 #"zookeeper:2181"
+      KAFKA_CREATE_TOPICS: "test:1:1"
+      KAFKA_ADVERTISED_PORT: 9092
+      # KAFKA_JMX_OPTS: "
+      #   -Dcom.sun.management.jmxremote
+      #   -Dcom.sun.management.jmxremote.authenticate=false
+      #   -Dcom.sun.management.jmxremote.ssl=false
+      #   -Djava.rmi.server.hostname=${KAFKA_ADVERTISED_HOST_NAME}
+      #   -Dcom.sun.management.jmxremote.rmi.port=1099"
+      # JMX_PORT: 1099
+      SERVICE_NAME: kafka
+      SERVICE_TAGS: monitoring
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    # networks:
+    # - widget_overlay_net
+    # deploy:
+    #   replicas: 1
+    #   placement:
+    #     constraints: [node.hostname == worker3]
+
+# networks:
+#   widget_overlay_net:
+#     external: true
+#
+# volumes:
+#   widget_data_vol:
+#     external: true

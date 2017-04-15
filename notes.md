@@ -1,4 +1,6 @@
 ```bash
+# http://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/#_configuration_options
+
 git clone --depth 1 --branch master \
   https://github.com/garystafford/kafka-docker.git
 cd kafka-docker
@@ -17,7 +19,7 @@ echo isro | nc zookeeper 2181
 echo srvr | nc zookeeper 2181
 
 docker exec -it  $(docker ps | grep kafka_stack_kafka | awk '{print $NF}') sh
-cd /opt/kafka_2.12-0.10.2.0/bin
+cd /opt/kafka/bin
 
 # wget --header "Content-Type: application/vnd.kafka.binary.v1+json" \
 #   --post-data='{"records":[{"value":"S2Fma2E="}]}' "http://192.168.99.105:9092/topics/test"
@@ -35,13 +37,30 @@ kafka-topics.sh --create \
   --partitions 1 \
   --topic streams-file-input
 
+  kafka-topics.sh --create \
+    --zookeeper zookeeper:2181 \
+    --replication-factor 1 \
+    --partitions 2 \
+    --topic output
+
 kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic output
 kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic output
 
+kafka-console-producer.sh --broker-list localhost:9092 --topic test
+kafka-topics.sh --delete --zookeeper localhost:2181 --topic test
+
 java -jar kafak-service-0.1.0.jar \
   --spring.cloud.stream.kafka.binder.brokers=192.168.99.105 \
-  --spring.cloud.stream.kafka.binder.defaultBrokerPort=9200 \
+  --spring.cloud.stream.kafka.binder.defaultBrokerPort=9092 \
   --spring.cloud.stream.kafka.binder.zkNodes=192.168.99.105 \
+  --spring.cloud.stream.kafka.binder.defaultZkPort=2181
+
+docker-compose -f docker-compose-local.yml up -d
+docker exec -it  $(docker ps | grep kafkadocker_kafka_1 | awk '{print $NF}') sh
+java -jar /Users/garystafford/IdeaProjects/spring_kafka_demo/build/libs/kafak-service-0.1.0.jar \
+  --spring.cloud.stream.kafka.binder.brokers=localhost \
+  --spring.cloud.stream.kafka.binder.defaultBrokerPort=9092 \
+  --spring.cloud.stream.kafka.binder.zkNodes=localhost \
   --spring.cloud.stream.kafka.binder.defaultZkPort=2181
 
 ```
