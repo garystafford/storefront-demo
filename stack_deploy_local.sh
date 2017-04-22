@@ -6,7 +6,7 @@ set -e
 
 export KAFKA_ADVERTISED_HOST_NAME=kafka
 
-docker-compose --file docker-compose-local.yml up -d
+docker-compose -f docker-compose-local.yml up --force-recreate -d
 
 echo "Letting services start-up..."
 sleep 5

@@ -3,28 +3,29 @@ version: '3.0'
 services:
   zookeeper:
     image: wurstmeister/zookeeper:latest
-    container_name: zookeeper
     ports:
     - "2181:2181/tcp"
 
   kafka:
     image: wurstmeister/kafka:latest
-    container_name: kafka
     depends_on:
     - zookeeper
-    expose:
-    - "9092"
+    # expose:
+    # - "9092"
     ports:
-    - "9092:9092"
+    - "9092:9092/tcp"
     environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_CREATE_TOPICS: "test:1:1"
+      KAFKA_CREATE_TOPICS: "output:2:1"
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-    volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
+    # volumes:
+    # - /var/run/docker.sock:/var/run/docker.sock
+
   testapp:
     image: openjdk:8u121-jdk-alpine
     hostname: testapp
+    depends_on:
+    - kafka
     container_name: testapp
     command: ['sleep', '6000']
