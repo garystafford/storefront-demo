@@ -1,5 +1,6 @@
 ```bash
 # http://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/#_configuration_options
+# http://ronnieroller.com/kafka/cheat-sheet
 
 git clone --depth 1 --branch master \
   https://github.com/garystafford/kafka-docker.git
