@@ -3,29 +3,28 @@ version: '3.0'
 services:
   zookeeper:
     image: wurstmeister/zookeeper:latest
+    container_name: zookeeper
     ports:
     - "2181:2181/tcp"
 
   kafka:
     image: wurstmeister/kafka:latest
+    container_name: kafka
     depends_on:
     - zookeeper
     expose:
     - "9092"
-    # - "1099"
     ports:
     - "9092:9092"
-    # - "1099:1099"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.107
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_CREATE_TOPICS: "test:1:1"
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      # KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote \
-      #   -Dcom.sun.management.jmxremote.authenticate=false \
-      #   -Dcom.sun.management.jmxremote.ssl=false \
-      #   -Djava.rmi.server.hostname=127.0.0.1 \
-      #   -Dcom.sun.management.jmxremote.rmi.port=1099"
-      # JMX_PORT: 1099
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
+  testapp:
+    image: openjdk:8u121-jdk-alpine
+    hostname: testapp
+    container_name: testapp
+    command: ['sleep', '6000']

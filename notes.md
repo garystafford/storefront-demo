@@ -35,7 +35,7 @@ kafka-topics.sh --create \
 kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic output
 kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic output
 
-kafka-console-producer.sh --broker-list localhost:9092 --topic test
+kafka-console-producer.sh --broker-list localhost:9092 --topic outpout
 kafka-topics.sh --delete --zookeeper localhost:2181 --topic test
 
 # remote on swarm works
@@ -45,13 +45,16 @@ java -jar kafak-service-0.1.0.jar \
   --spring.cloud.stream.kafka.binder.zkNodes=192.168.99.105 \
   --spring.cloud.stream.kafka.binder.defaultZkPort=2181
 
-# local - doesn't work!
+# local
 docker-compose -f docker-compose-local.yml up -d
-docker exec -it  $(docker ps | grep kafkadocker_kafka_1 | awk '{print $NF}') sh
-java -jar /Users/garystafford/IdeaProjects/spring_kafka_demo/build/libs/kafak-service-0.1.0.jar \
-  --spring.cloud.stream.kafka.binder.brokers=localhost \
+
+docker cp /Users/garystafford/IdeaProjects/spring_kafka_demo/build/libs/kafak-service-0.1.0.jar testapp:/kafak-service-0.1.0.jar
+
+java -jar kafak-service-0.1.0.jar \
+  --spring.cloud.stream.kafka.binder.brokers=kafka \
   --spring.cloud.stream.kafka.binder.defaultBrokerPort=9092 \
-  --spring.cloud.stream.kafka.binder.zkNodes=localhost \
+  --spring.cloud.stream.kafka.binder.zkNodes=zookeeper \
   --spring.cloud.stream.kafka.binder.defaultZkPort=2181
 
+docker exec -it  $(docker ps | grep kafkadocker_kafka_1 | awk '{print $NF}') sh
 ```
