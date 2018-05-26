@@ -1,6 +1,12 @@
 version: '3.2'
 
 services:
+  mongo:
+    image: mongo:latest
+    command: --smallfiles
+    ports:
+    - "27017:27017/tcp"
+
   zookeeper:
     image: wurstmeister/zookeeper:latest
     ports:
@@ -16,7 +22,7 @@ services:
     - "9092:9092/tcp"
     environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_CREATE_TOPICS: "output:2:1"
+      KAFKA_CREATE_TOPICS: "test:2:1"
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     # volumes:

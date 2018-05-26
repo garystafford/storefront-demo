@@ -19,7 +19,7 @@ echo mntr | nc zookeeper 2181
 echo isro | nc zookeeper 2181
 echo srvr | nc zookeeper 2181
 
-docker exec -it $(docker ps | grep kafka_stack_kafka | awk '{print $NF}') sh
+docker exec -it $(docker ps | grep kafka-docker_kafka_1 | awk '{print $NF}') sh
 cd /opt/kafka/bin
 
 kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic test
