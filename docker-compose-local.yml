@@ -4,6 +4,8 @@ services:
   mongo:
     image: mongo:latest
     command: --smallfiles
+    # expose:
+    # - "27017"
     ports:
     - "27017:27017/tcp"
 
@@ -33,5 +35,6 @@ services:
     hostname: testapp
     depends_on:
     - kafka
+    - mongo
     container_name: testapp
     command: ['sleep', '6000']
