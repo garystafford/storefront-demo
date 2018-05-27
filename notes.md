@@ -27,8 +27,9 @@ kafka-topics.sh --list --zookeeper zookeeper:2181
 kafka-topics.sh --describe --zookeeper zookeeper:2181 --topic test
 kafka-console-producer.sh --broker-list localhost:9092 --topic test
 
-kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic test
+kafka-topics.sh --alter --zookeeper zookeeper:2181 --topic test --partitions 4
 
+kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic test
 
 kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 2 --topic output
 
@@ -68,4 +69,12 @@ docker exec -it $(docker ps | grep kafka-docker_kafka_1 | awk '{print $NF}') sh
 cd /opt/kafka/bin
 
 kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic output
+
+# mongodb
+mongo
+show dbs
+use accounts
+show collections
+db.customer.find().pretty();
+db.customer.drop()
 ```
