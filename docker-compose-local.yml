@@ -4,8 +4,8 @@ services:
   mongo:
     image: mongo:latest
     command: --smallfiles
-    # expose:
-    # - "27017"
+    expose:
+    - "27017"
     ports:
     - "27017:27017/tcp"
 
@@ -18,8 +18,8 @@ services:
     image: wurstmeister/kafka:latest
     depends_on:
     - zookeeper
-    # expose:
-    # - "9092"
+    expose:
+    - "9092"
     ports:
     - "9092:9092/tcp"
     environment:
