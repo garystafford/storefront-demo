@@ -37,7 +37,9 @@ kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --par
 
 kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic output
 
-kafka-configs.sh --zookeeper zookeeper:2181 --alter --entity-type topics --entity-name output --add-config retention.ms=1000
+kafka-configs.sh --zookeeper zookeeper:2181 --alter --entity-type topics --entity-name accounts --add-config retention.ms=1000
+
+kafka-configs.sh --zookeeper zookeeper:2181 --alter --entity-type topics --entity-name accounts --delete-config retention.ms
 
 kafka-configs.sh --zookeeper zookeeper:2181 --describe --entity-type topics --entity-name output
 

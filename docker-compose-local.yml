@@ -11,6 +11,8 @@ services:
 
   zookeeper:
     image: wurstmeister/zookeeper:latest
+    expose:
+    - "2181"
     ports:
     - "2181:2181/tcp"
 
@@ -24,11 +26,26 @@ services:
     - "9092:9092/tcp"
     environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_CREATE_TOPICS: "test:2:1"
+      KAFKA_CREATE_TOPICS: "accounts.customer.change:1:1,fulfillment.order.change:1:1,orders.order.fulfill:1:1"
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
     # volumes:
     # - /var/run/docker.sock:/var/run/docker.sock
+
+  kafka_manager:
+    image: hlebalbau/kafka-manager:latest
+    ports:
+      - "9000:9000"
+    expose:
+    - "9000"
+    links:
+    - zookeeper
+    - kafka
+    environment:
+      ZK_HOSTS: "zookeeper:2181"
+      APPLICATION_SECRET: "random-secret"
+    command: -Dpidfile.path=/dev/null
 
   testapp:
     image: openjdk:8u151-jdk-alpine3.7
