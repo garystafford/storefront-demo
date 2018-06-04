@@ -52,4 +52,8 @@ services:
     depends_on:
     - kafka
     - mongo
-    command: ['sleep', '6000']
+    expose:
+    - "8085"
+    - "8090"
+    - "8095"
+    command: ['sleep', '60000']
