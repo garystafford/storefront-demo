@@ -10,9 +10,10 @@ import time
 client = MongoClient('mongodb://localhost:27017/')
 
 def main():
-    # delete_databases()
-    # delete_topics()
-    # create_sample_data()
+    delete_databases()
+    delete_topics()
+    
+    create_sample_data()
 
     get_mongo_doc('accounts', 'customer.accounts')
     get_mongo_doc('orders', 'customer.orders')
