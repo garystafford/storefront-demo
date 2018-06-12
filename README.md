@@ -11,6 +11,8 @@ Docker Compose file exposes ports so I can attach to containerized services from
 
 ## Usage
 
+This is currently the only Docker Compose file I am using.
+
 ```bash
 docker-compose -f docker-compose-local.yml up -d
 ```
