@@ -36,7 +36,7 @@ services:
   kafka_manager:
     image: hlebalbau/kafka-manager:latest
     ports:
-      - "9000:9000"
+      - "9000:9000/tcp"
     expose:
     - "9000"
     links:
@@ -47,13 +47,17 @@ services:
       APPLICATION_SECRET: "random-secret"
     command: -Dpidfile.path=/dev/null
 
-  testapp:
-    image: openjdk:8u151-jdk-alpine3.7
-    depends_on:
-    - kafka
-    - mongo
-    expose:
-    - "8085"
-    - "8090"
-    - "8095"
-    command: ['sleep', '60000']
+  # testapp:
+  #   image: openjdk:8u151-jdk-alpine3.7
+  #   depends_on:
+  #   - kafka
+  #   - mongo
+  #   ports:
+  #   - "8085:8085/tcp"
+  #   - "8090:8090/tcp"
+  #   - "8095:8095/tcp"
+  #   expose:
+  #   - "8085"
+  #   - "8090"
+  #   - "8095"
+  #   command: ['sleep', '60000']
