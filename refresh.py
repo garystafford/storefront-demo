@@ -30,6 +30,7 @@ def delete_databases():
 
 
 def delete_topics():
+    # call Kafka Manager API
     topics = ['accounts.customer.change',
               'orders.order.fulfill', 'fulfillment.order.change']
     for topic in topics:
