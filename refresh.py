@@ -10,24 +10,22 @@ import time
 client = MongoClient('mongodb://localhost:27017/')
 
 def main():
-    delete_databases()
-    delete_topics()
-    create_sample_data()
+    # delete_databases()
+    # delete_topics()
+    # create_sample_data()
 
-    get_accounts_docs()
-    get_orders_docs()
-    get_fulfillment_docs()
+    get_mongo_doc('accounts', 'customer.accounts')
+    get_mongo_doc('orders', 'customer.orders')
+    get_mongo_doc('fulfillment', 'fulfillment.requests')
 
 def delete_databases():
-    client = MongoClient('mongodb://localhost:27017/')
     dbs = ['accounts', 'orders', 'fulfillment']
     for db in dbs:
         client.drop_database(db)
 
     dbs = client.database_names()
-    print('databases:')
+    print('Reamining databases:')
     print(dbs)
-
 
 def delete_topics():
     # call Kafka Manager API
@@ -54,26 +52,13 @@ def create_sample_data():
         print(r.text)
         time.sleep(3)
 
-def get_accounts_docs():
-    db = client['accounts']
-    collection = db['customer.accounts']
-    cursor = collection.find()
-    for document in cursor:
-      pprint(document)
-
-def get_orders_docs():
-    db = client['orders']
-    collection = db['customer.orders']
-    cursor = collection.find()
-    for document in cursor:
-      pprint(document)
-
-def get_fulfillment_docs():
-    db = client['fulfillment']
-    collection = db['fulfillment.requests']
-    cursor = collection.find()
-    for document in cursor:
-      pprint(document)
+def get_mongo_doc(db_name, collection_name):
+    db = client[db_name]
+    collection = db[collection_name]
+    # cursor = collection.find()
+    # for document in cursor:
+    #   pprint(document)
+    pprint(collection.find_one())
 
 if __name__ == "__main__":
     main()
