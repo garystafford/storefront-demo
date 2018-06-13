@@ -6,21 +6,21 @@ services:
     # expose:
     # - "8080"
     ports:
-    - "8080:8080/tcp"
+    - "8085:8080/tcp"
 
   orders:
     image: garystafford/storefront-orders:latest
     # expose:
     # - "8080"
     ports:
-    - "8080:8080/tcp"
+    - "8090:8080/tcp"
 
   fulfillment:
     image: garystafford/storefront-fulfillment:latest
     # expose:
     # - "8080"
     ports:
-    - "8080:8080/tcp"
+    - "8095:8080/tcp"
 
   zuul:
     image: garystafford/storefront-zuul:latest
