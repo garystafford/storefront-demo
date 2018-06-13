@@ -19,8 +19,6 @@ else
     comment="Changes to project..."
 fi
 
-echo ${comment}
-
 for repo in "${repos[@]}"
 do
   cd ${root}/${repo} && \
