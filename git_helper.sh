@@ -11,6 +11,7 @@ repos=(
   storefront-demo-fulfillment
   storefront-eureka-server
   storefront-zuul-proxy
+  storefront-kafka-docker
 )
 if [ -n "${args[0]}" ]; then
     comment=${args[0]}
