@@ -1,13 +1,40 @@
 version: '3.2'
 
 services:
-  mongo:
-    image: mongo:latest
-    command: --smallfiles
-    expose:
-    - "27017"
+  accounts:
+    image: garystafford/storefront-accounts:latest
+    # expose:
+    # - "8080"
     ports:
-    - "27017:27017/tcp"
+    - "8080:8080/tcp"
+
+  orders:
+    image: garystafford/storefront-orders:latest
+    # expose:
+    # - "8080"
+    ports:
+    - "8080:8080/tcp"
+
+  fulfillment:
+    image: garystafford/storefront-fulfillment:latest
+    # expose:
+    # - "8080"
+    ports:
+    - "8080:8080/tcp"
+
+  zuul:
+    image: garystafford/storefront-zuul:latest
+    expose:
+    - "8080"
+    ports:
+    - "8080:8080/tcp"
+
+  eureka:
+    image: garystafford/storefront-eureka:latest
+    # expose:
+    # - "8761"
+    ports:
+    - "8761:8761/tcp"
 
   zookeeper:
     image: wurstmeister/zookeeper:latest
