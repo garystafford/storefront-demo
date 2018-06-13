@@ -28,6 +28,7 @@ do
   git commit -m "${comment}" && \
   git push && \
   git status
+  echo ${repo}
 done
 
 cd ../
