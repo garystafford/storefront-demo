@@ -10,8 +10,8 @@ import time
 client = MongoClient('mongodb://localhost:27017/')
 
 def main():
-    delete_databases()
-    delete_topics()
+    # delete_databases()
+    # delete_topics()
 
     create_sample_data()
 
@@ -40,13 +40,13 @@ def delete_topics():
 
 def create_sample_data():
     sample_urls = [
-        'http://localhost:8085/customers/sample',
-        'http://localhost:8090/customers/sample/orders',
-        'http://localhost:8090/customers/fulfill',
-        'http://localhost:8095/fulfillment/sample/process',
-        'http://localhost:8095/fulfillment/sample/ship',
-        'http://localhost:8095/fulfillment/sample/in-transit',
-        'http://localhost:8095/fulfillment/sample/receive']
+        'http://localhost:8080/accounts/customers/sample',
+        'http://localhost:8080/orders/customers/sample/orders',
+        'http://localhost:8080/orders/customers/fulfill',
+        'http://localhost:8080/fulfillment/fulfillment/sample/process',
+        'http://localhost:8080/fulfillment/fulfillment/sample/ship',
+        'http://localhost:8080/fulfillment/fulfillment/sample/in-transit',
+        'http://localhost:8080/fulfillment/fulfillment/sample/receive']
 
     for sample_url in sample_urls:
         r = requests.get(sample_url)

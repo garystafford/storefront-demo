@@ -5,8 +5,8 @@ services:
     image: garystafford/storefront-accounts:latest
     # expose:
     # - "8080"
-    ports:
-    - "8085:8080/tcp"
+    # ports:
+    # - "8085:8080/tcp"
     depends_on:
     - kafka
     - mongo
@@ -15,8 +15,8 @@ services:
     image: garystafford/storefront-orders:latest
     # expose:
     # - "8080"
-    ports:
-    - "8090:8080/tcp"
+    # ports:
+    # - "8090:8080/tcp"
     depends_on:
     - kafka
     - mongo
@@ -26,8 +26,8 @@ services:
     image: garystafford/storefront-fulfillment:latest
     # expose:
     # - "8080"
-    ports:
-    - "8095:8080/tcp"
+    # ports:
+    # - "8095:8080/tcp"
     depends_on:
     - kafka
     - mongo
@@ -54,8 +54,8 @@ services:
   mongo:
     image: mongo:latest
     command: --smallfiles
-    # expose:
-    # - "27017"
+    expose:
+    - "27017"
     ports:
     - "27017:27017/tcp"
 
@@ -84,12 +84,9 @@ services:
   kafka_manager:
     image: hlebalbau/kafka-manager:latest
     ports:
-      - "9000:9000/tcp"
+    - "9000:9000/tcp"
     expose:
     - "9000"
-    # links:
-    # - zookeeper
-    # - kafka
     depends_on:
     - kafka
     environment:
