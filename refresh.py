@@ -10,8 +10,8 @@ import time
 client = MongoClient('mongodb://localhost:27017/')
 
 def main():
-    # delete_databases()
-    # delete_topics()
+    delete_databases()
+    delete_topics()
 
     create_sample_data()
 
@@ -23,6 +23,7 @@ def delete_databases():
     dbs = ['accounts', 'orders', 'fulfillment']
     for db in dbs:
         client.drop_database(db)
+        print('MongoDB dropped: ' + db)
 
     dbs = client.database_names()
     print('Reamining databases:')

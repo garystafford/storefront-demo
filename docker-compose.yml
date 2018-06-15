@@ -3,46 +3,64 @@ version: '3.2'
 services:
   accounts:
     image: garystafford/storefront-accounts:latest
-    # expose:
-    # - "8080"
     # ports:
-    # - "8085:8080/tcp"
+    # - "8080:8080/tcp"
     depends_on:
     - kafka
     - mongo
+    hostname: accounts
+    # environment:
+    #   LOGGING_LEVEL_ROOT: DEBUG
+    #   SPRING_PROFILES_ACTIVE: docker
+    networks:
+    - kafka-net
 
   orders:
     image: garystafford/storefront-orders:latest
-    # expose:
-    # - "8080"
     # ports:
-    # - "8090:8080/tcp"
+    # - "8080:8080/tcp"
     depends_on:
     - kafka
     - mongo
     - eureka
+    hostname: orders
+    # environment:
+    #   LOGGING_LEVEL_ROOT: DEBUG
+    #   SPRING_PROFILES_ACTIVE: docker
+    networks:
+    - kafka-net
 
   fulfillment:
     image: garystafford/storefront-fulfillment:latest
-    # expose:
-    # - "8080"
     # ports:
-    # - "8095:8080/tcp"
+    # - "8080:8080/tcp"
     depends_on:
     - kafka
     - mongo
     - eureka
+    hostname: fulfillment
+    # environment:
+    #   LOGGING_LEVEL_ROOT: DEBUG
+    #   SPRING_PROFILES_ACTIVE: docker
+    networks:
+    - kafka-net
 
   zuul:
     image: garystafford/storefront-zuul:latest
-    expose:
-    - "8080"
+    # expose:
+    # - "8080"
     ports:
     - "8080:8080/tcp"
     depends_on:
     - kafka
     - mongo
     - eureka
+    hostname: zuul
+    # environment:
+    #   LOGGING_LEVEL_ROOT: DEBUG
+    #   SPRING_PROFILES_ACTIVE: docker
+    networks:
+    - kafka-net
 
   eureka:
     image: garystafford/storefront-eureka:latest
@@ -50,14 +68,20 @@ services:
     # - "8761"
     ports:
     - "8761:8761/tcp"
+    hostname: eureka
+    networks:
+    - kafka-net
 
   mongo:
     image: mongo:latest
     command: --smallfiles
-    expose:
-    - "27017"
+    # expose:
+    # - "27017"
     ports:
     - "27017:27017/tcp"
+    hostname: mongo
+    networks:
+    - kafka-net
 
   zookeeper:
     image: wurstmeister/zookeeper:latest
@@ -65,6 +89,9 @@ services:
     # - "2181"
     ports:
     - "2181:2181/tcp"
+    hostname: zookeeper
+    networks:
+    - kafka-net
 
   kafka:
     image: wurstmeister/kafka:latest
@@ -80,16 +107,28 @@ services:
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_DELETE_TOPIC_ENABLE: "true"
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    hostname: kafka
+    networks:
+    - kafka-net
 
   kafka_manager:
     image: hlebalbau/kafka-manager:latest
     ports:
     - "9000:9000/tcp"
-    expose:
-    - "9000"
+    # expose:
+    # - "9000"
     depends_on:
     - kafka
     environment:
       ZK_HOSTS: "zookeeper:2181"
       APPLICATION_SECRET: "random-secret"
     command: -Dpidfile.path=/dev/null
+    hostname: kafka_manager
+    networks:
+    - kafka-net
+
+networks:
+  kafka-net:
+    driver: overlay

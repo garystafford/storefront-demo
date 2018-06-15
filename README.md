@@ -5,31 +5,28 @@ See the source at: <http://wurstmeister.github.io/kafka-docker/>
 
 ## Goal
 
-Spins up Docker containers for Kafka, Zookeeper, Kafka Manager, MongoDB, Zuul, Eureka Server, and the three Storefront microservices, for use with a new post I am writing, 'Using Eventual Consistency and Spring for Kafka, to Manage a Microservice-based Distributed Data Model: Part 1 of 2'. Note there is no persistent storage backing Kafka or MongoDB.
+Spins up a Docker Stack, including containers for Kafka, Zookeeper, Kafka Manager, MongoDB, Zuul, Eureka Server, and the three Storefront microservices, for use with a new post I am writing, 'Using Eventual Consistency and Spring for Kafka, to Manage a Microservice-based Distributed Data Model: Part 1 of 2'. Note there is no persistent storage backing Kafka or MongoDB.
 
 In the Docker Compose file, you can chose uncomment the Kafka and MongoDB ports to expose them for local development.
 
 ## Usage
 
 ```bash
-docker-compose up -d
-
-# or for on-going development, I prefer
-docker-compose up -d --force-recreate --remove-orphans
-docker-compose rm
+docker swarm init
+docker stack deploy -c docker-compose.yml storefront
 ```
 
 ## Results
-
+$ docker container ls
 ```text
-CONTAINER ID        IMAGE                                        COMMAND                  CREATED             STATUS              PORTS                                                NAMES
-effc6503860f        hlebalbau/kafka-manager:latest               "/kafka-manager/bin/…"   41 seconds ago      Up 37 seconds       0.0.0.0:9000->9000/tcp                               storefront-kafka-docker_kafka_manager_1
-1d18e19319d5        garystafford/storefront-orders:latest        "java -jar -Djava.se…"   41 seconds ago      Up 37 seconds       0.0.0.0:8090->8080/tcp                               storefront-kafka-docker_orders_1
-f860d8198bbd        garystafford/storefront-accounts:latest      "java -jar -Djava.se…"   41 seconds ago      Up 37 seconds       0.0.0.0:8085->8080/tcp                               storefront-kafka-docker_accounts_1
-1d508aeffe7a        garystafford/storefront-fulfillment:latest   "java -jar -Djava.se…"   41 seconds ago      Up 37 seconds       0.0.0.0:8095->8080/tcp                               storefront-kafka-docker_fulfillment_1
-e2cd48d96911        garystafford/storefront-zuul:latest          "java -jar -Djava.se…"   41 seconds ago      Up 37 seconds       0.0.0.0:8080->8080/tcp, 8761/tcp                     storefront-kafka-docker_zuul_1
-053b5e5ef422        wurstmeister/kafka:latest                    "start-kafka.sh"         42 seconds ago      Up 40 seconds       0.0.0.0:9092->9092/tcp                               storefront-kafka-docker_kafka_1
-a1089ad5b41c        mongo:latest                                 "docker-entrypoint.s…"   43 seconds ago      Up 41 seconds       0.0.0.0:27017->27017/tcp                             storefront-kafka-docker_mongo_1
-e71d0cb034b7        garystafford/storefront-eureka:latest        "java -jar -Djava.se…"   43 seconds ago      Up 41 seconds       0.0.0.0:8761->8761/tcp                               storefront-kafka-docker_eureka_1
-8ad4a1cffe9e        wurstmeister/zookeeper:latest                "/bin/sh -c '/usr/sb…"   43 seconds ago      Up 41 seconds       22/tcp, 2888/tcp, 3888/tcp, 0.0.0.0:2181->2181/tcp   storefront-kafka-docker_zookeeper_1
+CONTAINER ID        IMAGE                                        COMMAND                  CREATED              STATUS              PORTS                                  NAMES
+b1739c25ea47        wurstmeister/kafka:latest                    "start-kafka.sh"         About a minute ago   Up About a minute                                          storefront_kafka.1.m9t0j465gcrjifsg3bgma64wc
+59a5c4a5a905        garystafford/storefront-fulfillment:latest   "java -jar -Djava.se…"   About a minute ago   Up About a minute   8080/tcp                               storefront_fulfillment.1.iw02ockbyozk21c1fd4ggo96x
+0ff04a4c9c44        garystafford/storefront-orders:latest        "java -jar -Djava.se…"   2 minutes ago        Up 2 minutes        8080/tcp                               storefront_orders.1.rf85jp9g9fa8m2ghf21irjhzg
+ad17e37cc1ca        garystafford/storefront-accounts:latest      "java -jar -Djava.se…"   6 minutes ago        Up 6 minutes        8080/tcp                               storefront_accounts.1.ug2fbjypzd1tjgv456am0yb96
+0f407f17c942        garystafford/storefront-zuul:latest          "java -jar -Djava.se…"   6 minutes ago        Up 6 minutes        8761/tcp                               storefront_zuul.1.sg600g5gfc3v1pvjxv4xjs64z
+fefbc0b5cb7f        mongo:latest                                 "docker-entrypoint.s…"   24 minutes ago       Up 24 minutes       27017/tcp                              storefront_mongo.1.it03z2j35zrtdjy3ovvb5vl4z
+e624850f76f1        hlebalbau/kafka-manager:latest               "/kafka-manager/bin/…"   25 minutes ago       Up 24 minutes                                              storefront_kafka_manager.1.ix920o999ps9l8r04srv5n5me
+6dcd2511a30c        wurstmeister/zookeeper:latest                "/bin/sh -c '/usr/sb…"   25 minutes ago       Up 25 minutes       22/tcp, 2181/tcp, 2888/tcp, 3888/tcp   storefront_zookeeper.1.w5rhoevig0ng85ar3m4dqfv2t
+2aaca5fe98a7        garystafford/storefront-eureka:latest        "java -jar -Djava.se…"   26 minutes ago       Up 26 minutes       8761/tcp                               storefront_eureka.1.jvs3h76lo876plbx9sp07vgad
 ```
