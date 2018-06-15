@@ -85,8 +85,6 @@ services:
 
   zookeeper:
     image: wurstmeister/zookeeper:latest
-    # expose:
-    # - "2181"
     ports:
     - "2181:2181/tcp"
     hostname: zookeeper

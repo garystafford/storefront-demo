@@ -4,8 +4,6 @@
 
 set -e
 
-export KAFKA_ADVERTISED_HOST_NAME=kafka
-
 docker swarm init
 docker stack deploy -c docker-compose.yml storefront
 
