@@ -11,13 +11,23 @@ In the Docker Compose file, you can chose uncomment the Kafka and MongoDB ports 
 
 ## Usage
 
+Build Docker Swarm and deploy Docker Stack.
+
 ```bash
 docker swarm init
 docker stack deploy -c docker-compose.yml storefront
 ```
 
+Delete (3) MongoDB databases, (3) Kafka topics, create sample data by hitting Zuul API Gateway endpoints, and return MongoDB documents as verification.
+
+```bash
+python3 ./refresh.py
+```
+
 ## Results
+
 $ docker container ls
+
 ```text
 CONTAINER ID        IMAGE                                        COMMAND                  CREATED             STATUS              PORTS                                  NAMES
 ccf0e9a0637d        garystafford/storefront-fulfillment:latest   "java -jar -Djava.se…"   11 minutes ago      Up 11 minutes       8080/tcp                               storefront_fulfillment.1.0mht01m6nk461q7mt1ey4zsjb
