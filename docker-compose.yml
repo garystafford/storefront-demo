@@ -47,8 +47,8 @@ services:
 
   zuul:
     image: garystafford/storefront-zuul:latest
-    # expose:
-    # - "8080"
+    expose:
+    - "8080"
     ports:
     - "8080:8080/tcp"
     depends_on:
@@ -64,8 +64,8 @@ services:
 
   eureka:
     image: garystafford/storefront-eureka:latest
-    # expose:
-    # - "8761"
+    expose:
+    - "8761"
     ports:
     - "8761:8761/tcp"
     hostname: eureka
@@ -115,8 +115,8 @@ services:
     image: hlebalbau/kafka-manager:latest
     ports:
     - "9000:9000/tcp"
-    # expose:
-    # - "9000"
+    expose:
+    - "9000"
     depends_on:
     - kafka
     environment:

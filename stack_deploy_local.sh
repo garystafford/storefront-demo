@@ -11,5 +11,6 @@ echo "Letting services start-up..."
 sleep 5
 
 docker ps
+docker stack services storefront
 
 echo "Script completed..."
