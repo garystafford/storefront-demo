@@ -11,7 +11,6 @@ services:
     hostname: accounts
     # environment:
     #   LOGGING_LEVEL_ROOT: DEBUG
-    #   SPRING_PROFILES_ACTIVE: docker
     networks:
     - kafka-net
 
@@ -26,7 +25,6 @@ services:
     hostname: orders
     # environment:
     #   LOGGING_LEVEL_ROOT: DEBUG
-    #   SPRING_PROFILES_ACTIVE: docker
     networks:
     - kafka-net
 
@@ -41,7 +39,6 @@ services:
     hostname: fulfillment
     # environment:
     #   LOGGING_LEVEL_ROOT: DEBUG
-    #   SPRING_PROFILES_ACTIVE: docker
     networks:
     - kafka-net
 
@@ -58,7 +55,6 @@ services:
     hostname: zuul
     # environment:
     #   LOGGING_LEVEL_ROOT: DEBUG
-    #   SPRING_PROFILES_ACTIVE: docker
     networks:
     - kafka-net
 
@@ -101,7 +97,7 @@ services:
     - "9092:9092/tcp"
     environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_CREATE_TOPICS: "accounts.customer.change:1:1,fulfillment.order.change:1:1,orders.order.fulfill:1:1"
+      KAFKA_CREATE_TOPICS: "accounts.customer.change:1:1,fulfillment.order.change:1:1,orders.order.fulfill:2:1"
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_DELETE_TOPIC_ENABLE: "true"
