@@ -1,47 +1,6 @@
 version: '3.2'
 
 services:
-  accounts:
-    image: garystafford/storefront-accounts:latest
-    # ports:
-    # - "8080:8080/tcp"
-    depends_on:
-    - kafka
-    - mongo
-    hostname: accounts
-    # environment:
-    #   LOGGING_LEVEL_ROOT: DEBUG
-    networks:
-    - kafka-net
-
-  orders:
-    image: garystafford/storefront-orders:latest
-    # ports:
-    # - "8080:8080/tcp"
-    depends_on:
-    - kafka
-    - mongo
-    - eureka
-    hostname: orders
-    # environment:
-    #   LOGGING_LEVEL_ROOT: DEBUG
-    networks:
-    - kafka-net
-
-  fulfillment:
-    image: garystafford/storefront-fulfillment:latest
-    # ports:
-    # - "8080:8080/tcp"
-    depends_on:
-    - kafka
-    - mongo
-    - eureka
-    hostname: fulfillment
-    # environment:
-    #   LOGGING_LEVEL_ROOT: DEBUG
-    networks:
-    - kafka-net
-
   zuul:
     image: garystafford/storefront-zuul:latest
     expose:
@@ -53,8 +12,12 @@ services:
     - mongo
     - eureka
     hostname: zuul
-    # environment:
-    #   LOGGING_LEVEL_ROOT: DEBUG
+    environment:
+      LOGGING_LEVEL_ROOT: DEBUG
+      RIBBON_READTIMEOUT: 3000
+      RIBBON_SOCKETTIMEOUT: 3000
+      ZUUL_HOST_CONNECT_TIMEOUT_MILLIS: 3000
+      ZUUL_HOST_CONNECT_SOCKET_MILLIS: 3000      
     networks:
     - kafka-net
 

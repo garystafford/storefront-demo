@@ -4,7 +4,11 @@
 
 # set -e
 
-docker stack storefront rm
+docker stack rm storefront
+
+echo "Destroying stack...pausing for 30 seconds..."
+sleep 30
+
 docker ps
 
 echo "Script completed..."
