@@ -52,7 +52,7 @@ def create_sample_data():
     for sample_url in sample_urls:
         r = requests.get(sample_url)
         print(r.text)
-        time.sleep(3)
+        time.sleep(5)
 
 def get_mongo_doc(db_name, collection_name):
     db = client[db_name]
