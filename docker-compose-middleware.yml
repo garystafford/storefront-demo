@@ -13,11 +13,11 @@ services:
     - eureka
     hostname: zuul
     environment:
-      LOGGING_LEVEL_ROOT: DEBUG
+      # LOGGING_LEVEL_ROOT: DEBUG
       RIBBON_READTIMEOUT: 3000
       RIBBON_SOCKETTIMEOUT: 3000
       ZUUL_HOST_CONNECT_TIMEOUT_MILLIS: 3000
-      ZUUL_HOST_CONNECT_SOCKET_MILLIS: 3000      
+      ZUUL_HOST_CONNECT_SOCKET_MILLIS: 3000
     networks:
     - kafka-net
 

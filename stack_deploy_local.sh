@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Deploys the containers
+# Deploys the storefront Docker stack
 
 set -e
 
