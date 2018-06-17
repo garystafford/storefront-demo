@@ -28,6 +28,7 @@ def delete_databases():
     dbs = client.database_names()
     print('Reamining databases:')
     print(dbs)
+    print ('\n')
 
 def delete_topics():
     # call Kafka Manager API
@@ -38,6 +39,7 @@ def delete_topics():
         r = requests.post(kafka_manager_url, data={'topic': topic})
         time.sleep(3)
         print('Kafka topic deleted: ' + topic)
+    print ('\n')
 
 def create_sample_data():
     sample_urls = [
@@ -53,14 +55,13 @@ def create_sample_data():
         r = requests.get(sample_url)
         print(r.text)
         time.sleep(5)
+    print ('\n')
 
 def get_mongo_doc(db_name, collection_name):
     db = client[db_name]
     collection = db[collection_name]
-    # cursor = collection.find()
-    # for document in cursor:
-    #   pprint(document)
     pprint(collection.find_one())
+    print ('\n')
 
 if __name__ == "__main__":
     main()
