@@ -50,10 +50,10 @@ def create_sample_data():
         'http://localhost:8080/accounts/customers/sample',
         'http://localhost:8080/orders/customers/sample/orders',
         'http://localhost:8080/orders/customers/fulfill',
-        'http://localhost:8080/fulfillment/fulfillment/sample/process',
-        'http://localhost:8080/fulfillment/fulfillment/sample/ship',
-        'http://localhost:8080/fulfillment/fulfillment/sample/in-transit',
-        'http://localhost:8080/fulfillment/fulfillment/sample/receive']
+        'http://localhost:8080/fulfillment/fulfillments/sample/process',
+        'http://localhost:8080/fulfillment/fulfillments/sample/ship',
+        'http://localhost:8080/fulfillment/fulfillments/sample/in-transit',
+        'http://localhost:8080/fulfillment/fulfillments/sample/receive']
 
     for sample_url in sample_urls:
         r = requests.get(sample_url)
