@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
-# python3 ./refresh.py
+# Delete (3) MongoDB databases, (3) Kafka topics,
+# create sample data by hitting Zuul API Gateway endpoints,
+# and return MongoDB documents as verification.
+
+# usage: python3 ./refresh.py
 
 from pprint import pprint
 from pymongo import MongoClient
