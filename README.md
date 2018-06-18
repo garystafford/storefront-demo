@@ -5,7 +5,7 @@ See the source at: <http://wurstmeister.github.io/kafka-docker/>
 
 ## Goal
 
-Spins up a Docker Swarm with a Docker Stack, including containers for Kafka, Zookeeper, Kafka Manager, MongoDB, Mongo Express, Zuul, Eureka Server, and the three Storefront microservices. For use with a new post I am writing, 'Using Eventual Consistency and Spring for Kafka, to Manage a Microservice-based Distributed Data Model'. Note there is no persistent storage backing Kafka or MongoDB.
+Spins up a Docker Swarm with a Docker Stack, including containers for Kafka, Zookeeper, Kafka Manager, MongoDB, Mongo Express, Zuul, Eureka Server, and the three Storefront microservices. For use with my two-part post, [Using Eventual Consistency  and Spring for Kafka to Manage a Distributed Data Model](https://wp.me/p1RD28-5SF). Note there is no persistent storage backing Kafka or MongoDB.
 
 In the Docker Compose file, you can chose uncomment the Kafka and MongoDB ports to expose them for local development.
 
@@ -21,7 +21,7 @@ Build Docker Swarm and deploy Docker Stack.
 
 ```bash
 docker swarm init
-docker stack deploy -c docker-compose.yml storefront
+sh ./stack_deploy_local.sh
 ```
 
 Delete (3) MongoDB databases, (3) Kafka topics, create sample data by hitting Zuul API Gateway endpoints, and return MongoDB documents as verification.
