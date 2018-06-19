@@ -54,7 +54,7 @@ def create_sample_data():
     sample_urls = [
         'http://localhost:8080/accounts/customers/sample',
         'http://localhost:8080/orders/customers/sample/orders',
-        'http://localhost:8080/orders/customers/fulfill',
+        'http://localhost:8080/orders/customers/sample/fulfill',
         'http://localhost:8080/fulfillment/fulfillments/sample/process',
         'http://localhost:8080/fulfillment/fulfillments/sample/ship',
         'http://localhost:8080/fulfillment/fulfillments/sample/in-transit',
