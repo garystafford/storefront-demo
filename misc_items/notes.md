@@ -12,7 +12,7 @@ eval $(docker-machine env worker3)
 
 docker logs $(docker ps | grep zookeeper | awk '{print $NF}') --follow
 
-docker run -it --network widget_overlay_net --rm busybox
+docker run -it --network kafka-net --rm busybox
 
 echo stat | nc zookeeper 2181
 echo mntr | nc zookeeper 2181

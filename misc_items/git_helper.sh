@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# usage: sh ./git_helper.sh "Refactoring code"
+# commit code changes to GitHub for all storefront projects
+# usage: sh ./git_helper.sh "Refactoring storefront code"
 
 args=("$@")
 
@@ -16,7 +17,7 @@ repos=(
 if [ -n "${args[0]}" ]; then
     comment=${args[0]}
 else
-    comment="Changes to project..."
+    comment="Automated commit of changes to project"
 fi
 
 for repo in "${repos[@]}"

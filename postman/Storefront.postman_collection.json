@@ -217,13 +217,14 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "{{local_zuul_url}}/orders/customers/fulfill",
+							"raw": "{{local_zuul_url}}/orders/customers/sample/fulfill",
 							"host": [
 								"{{local_zuul_url}}"
 							],
 							"path": [
 								"orders",
 								"customers",
+								"sample",
 								"fulfill"
 							]
 						}
@@ -231,7 +232,7 @@
 					"response": []
 				},
 				{
-					"name": "4 - /fulfillment/fulfillment/sample/process",
+					"name": "4 - /fulfillment/fulfillments/sample/process",
 					"request": {
 						"method": "GET",
 						"header": [],
