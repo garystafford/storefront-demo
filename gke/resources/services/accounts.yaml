@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: accounts
+  labels:
+    app: accounts
+spec:
+  ports:
+  - name: http
+    port: 8080
+  selector:
+    app: accounts
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: accounts
+  labels:
+    app: accounts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accounts
+  template:
+    metadata:
+      labels:
+        app: accounts
+      # annotations:
+      #   sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - name: accounts
+        image: garystafford/storefront-accounts:gke-2.1.0
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "gke"
+        - name: SERVER_SERVLET_CONTEXT-PATH
+          value: "/accounts"
+        - name: LOGGING_LEVEL_ROOT
+          value: "INFO"
+        - name: SPRING_DATA_MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-atlas-accounts
+              key: mongodb-uri
+        - name: SPRING_DATA_KAFKA_BOOTSTRAP-SERVERS
+          valueFrom:
+            secretKeyRef:
+              name: confluent-cloud-kafka
+              key: bootstrap-servers
+        - name: SPRING_KAFKA_PROPERTIES_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM
+          valueFrom:
+            configMapKeyRef:
+              name: confluent-cloud-kafka
+              key: ssl.endpoint.identification.algorithm
+        - name: SPRING_KAFKA_PROPERTIES_SASL_MECHANISM
+          valueFrom:
+            configMapKeyRef:
+              name: confluent-cloud-kafka
+              key: sasl.mechanism
+        - name: SPRING_KAFKA_PROPERTIES_REQUEST_TIMEOUT_MS
+          valueFrom:
+            configMapKeyRef:
+              name: confluent-cloud-kafka
+              key: request.timeout.ms
+        - name: SPRING_KAFKA_PROPERTIES_RETRY_BACKOFF_MS
+          valueFrom:
+            configMapKeyRef:
+              name: confluent-cloud-kafka
+              key: retry.backoff.ms
+        - name: SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG
+          valueFrom:
+            secretKeyRef:
+              name: confluent-cloud-kafka
+              key: sasl-jaas-config
+        - name: SPRING_KAFKA_PROPERTIES_SECURITY_PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              name: confluent-cloud-kafka
+              key: security.protocol
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: IfNotPresent #Always
+      restartPolicy: Always

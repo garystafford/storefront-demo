@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-release
+  labels:
+    app: mongodb-release
+spec:
+  ports:
+  - name: http
+    port: 27017
+  selector:
+    app: mongodb-release
+  type: NodePort
