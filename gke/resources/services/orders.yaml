@@ -35,14 +35,52 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "gke"
-        - name: SPRING_DATA_MONGODB_URI
-          value: "mongodb://storefront-user:storefront-password@mongodb-release:27017"
-        - name: SPRING_DATA_MONGODB_DATABASE
-          value: "orders"
-        - name: SPRING_DATA_KAFKA_BOOTSTRAP-SERVERS
-          value: "kafka:9092"
+        - name: SERVER_SERVLET_CONTEXT-PATH
+          value: "/orders"
         - name: LOGGING_LEVEL_ROOT
-          value: "DEBUG"
+          value: "INFO"
+        - name: SPRING_MAIN_ALLOW-BEAN-DEFINITION-OVERRIDING
+          value: "true"
+        - name: SPRING_DATA_MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-atlas
+              key: mongodb.uri.orders
+        - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
+          valueFrom:
+            secretKeyRef:
+              name: confluent-cloud-kafka
+              key: bootstrap.servers
+        - name: SPRING_KAFKA_PROPERTIES_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM
+          valueFrom:
+            configMapKeyRef:
+              name: confluent-cloud-kafka
+              key: ssl.endpoint.identification.algorithm
+        - name: SPRING_KAFKA_PROPERTIES_SASL_MECHANISM
+          valueFrom:
+            configMapKeyRef:
+              name: confluent-cloud-kafka
+              key: sasl.mechanism
+        - name: SPRING_KAFKA_PROPERTIES_REQUEST_TIMEOUT_MS
+          valueFrom:
+            configMapKeyRef:
+              name: confluent-cloud-kafka
+              key: request.timeout.ms
+        - name: SPRING_KAFKA_PROPERTIES_RETRY_BACKOFF_MS
+          valueFrom:
+            configMapKeyRef:
+              name: confluent-cloud-kafka
+              key: retry.backoff.ms
+        - name: SPRING_KAFKA_PROPERTIES_SASL_JAAS_CONFIG
+          valueFrom:
+            secretKeyRef:
+              name: confluent-cloud-kafka
+              key: sasl.jaas.config
+        - name: SPRING_KAFKA_PROPERTIES_SECURITY_PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              name: confluent-cloud-kafka
+              key: security.protocol
         ports:
         - containerPort: 8080
         imagePullPolicy: IfNotPresent #Always

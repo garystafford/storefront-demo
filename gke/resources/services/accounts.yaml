@@ -42,13 +42,13 @@ spec:
         - name: SPRING_DATA_MONGODB_URI
           valueFrom:
             secretKeyRef:
-              name: mongodb-atlas-accounts
-              key: mongodb-uri
-        - name: SPRING_DATA_KAFKA_BOOTSTRAP-SERVERS
+              name: mongodb-atlas
+              key: mongodb.uri.accounts
+        - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
           valueFrom:
             secretKeyRef:
               name: confluent-cloud-kafka
-              key: bootstrap-servers
+              key: bootstrap.servers
         - name: SPRING_KAFKA_PROPERTIES_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM
           valueFrom:
             configMapKeyRef:
@@ -73,7 +73,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: confluent-cloud-kafka
-              key: sasl-jaas-config
+              key: sasl.jaas.config
         - name: SPRING_KAFKA_PROPERTIES_SECURITY_PROTOCOL
           valueFrom:
             configMapKeyRef:

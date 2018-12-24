@@ -3,9 +3,10 @@
 # part 2: deploy resources
 
 export NAMESPACE="dev"
-export PROJECT="dataproc-demo-224523"
+export PROJECT="gke-confluent-atlas"
 export CLUSTER="istio-kafka-demo"
-export ZONE="us-east1-b"
+export REGION="us-central1"
+export ZONE="us-central1-a"
 
 # export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 # export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
@@ -20,7 +21,7 @@ export ZONE="us-east1-b"
 kubectl apply -n $NAMESPACE -f ./resources/other/istio-gateway.yaml
 
 kubectl apply -n $NAMESPACE -f ./resources/config/confluent-cloud-kafka-configmap.yaml
-kubectl apply -n $NAMESPACE -f ../../storefront-secrets/mongodb-atlas-accounts-secret.yaml
+kubectl apply -n $NAMESPACE -f ../../storefront-secrets/mongodb-atlas-secret.yaml
 kubectl apply -n $NAMESPACE -f ../../storefront-secrets/confluent-cloud-kafka-secret.yaml
 
 # IP_RANGES="10.44.0.0/14,10.47.240.0/20"
@@ -33,8 +34,10 @@ kubectl apply -n $NAMESPACE -f ../../storefront-secrets/confluent-cloud-kafka-se
 #   && kubectl apply -f accounts-istio.yaml -n dev \
 #   && rm accounts-istio.yaml
 
+ccloud topic create accounts.customer.change
+ccloud topic create fulfillment.order.change
+ccloud topic create orders.order.fulfill
+
 kubectl apply -n $NAMESPACE -f ./resources/services/accounts.yaml
-
-# kubectl apply -n $NAMESPACE -f ./resources/services/fulfillment.yaml
-
-# kubectl apply -n $NAMESPACE -f ./resources/services/orders.yaml
+kubectl apply -n $NAMESPACE -f ./resources/services/fulfillment.yaml
+kubectl apply -n $NAMESPACE -f ./resources/services/orders.yaml
