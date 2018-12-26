@@ -1,56 +1,56 @@
 version: '3.2'
 
 services:
-  zuul:
-    image: garystafford/storefront-zuul:latest
-    expose:
-    - "8080"
-    ports:
-    - "8080:8080/tcp"
-    depends_on:
-    - kafka
-    - mongo
-    - eureka
-    hostname: zuul
-    environment:
-      # LOGGING_LEVEL_ROOT: DEBUG
-      RIBBON_READTIMEOUT: 3000
-      RIBBON_SOCKETTIMEOUT: 3000
-      ZUUL_HOST_CONNECT_TIMEOUT_MILLIS: 3000
-      ZUUL_HOST_CONNECT_SOCKET_MILLIS: 3000
-    networks:
-    - kafka-net
-
-  eureka:
-    image: garystafford/storefront-eureka:latest
-    expose:
-    - "8761"
-    ports:
-    - "8761:8761/tcp"
-    hostname: eureka
-    networks:
-    - kafka-net
-
-  mongo:
-    image: mongo:latest
-    command: --smallfiles
-    # expose:
-    # - "27017"
-    ports:
-    - "27017:27017/tcp"
-    hostname: mongo
-    networks:
-    - kafka-net
-
-  mongo_express:
-    image: mongo-express:latest
-    expose:
-    - "8081"
-    ports:
-    - "8081:8081/tcp"
-    hostname: mongo_express
-    networks:
-    - kafka-net
+  # zuul:
+  #   image: garystafford/storefront-zuul:latest
+  #   expose:
+  #   - "8080"
+  #   ports:
+  #   - "8080:8080/tcp"
+  #   depends_on:
+  #   - kafka
+  #   - mongo
+  #   - eureka
+  #   hostname: zuul
+  #   environment:
+  #     # LOGGING_LEVEL_ROOT: DEBUG
+  #     RIBBON_READTIMEOUT: 3000
+  #     RIBBON_SOCKETTIMEOUT: 3000
+  #     ZUUL_HOST_CONNECT_TIMEOUT_MILLIS: 3000
+  #     ZUUL_HOST_CONNECT_SOCKET_MILLIS: 3000
+  #   networks:
+  #   - kafka-net
+  #
+  # eureka:
+  #   image: garystafford/storefront-eureka:latest
+  #   expose:
+  #   - "8761"
+  #   ports:
+  #   - "8761:8761/tcp"
+  #   hostname: eureka
+  #   networks:
+  #   - kafka-net
+  #
+  # mongo:
+  #   image: mongo:latest
+  #   command: --smallfiles
+  #   # expose:
+  #   # - "27017"
+  #   ports:
+  #   - "27017:27017/tcp"
+  #   hostname: mongo
+  #   networks:
+  #   - kafka-net
+  #
+  # mongo_express:
+  #   image: mongo-express:latest
+  #   expose:
+  #   - "8081"
+  #   ports:
+  #   - "8081:8081/tcp"
+  #   hostname: mongo_express
+  #   networks:
+  #   - kafka-net
 
   zookeeper:
     image: wurstmeister/zookeeper:latest
@@ -64,8 +64,8 @@ services:
     image: wurstmeister/kafka:latest
     depends_on:
     - zookeeper
-    # expose:
-    # - "9092"
+    expose:
+    - "9092"
     ports:
     - "9092:9092/tcp"
     environment:

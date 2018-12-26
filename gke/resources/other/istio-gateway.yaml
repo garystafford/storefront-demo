@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: httpbin-gateway
+  name: storefront-gateway
 spec:
   selector:
     istio: ingressgateway
@@ -21,7 +21,7 @@ spec:
   hosts:
   - "*"
   gateways:
-  - httpbin-gateway
+  - storefront-gateway
   http:
   - match:
     - uri:
