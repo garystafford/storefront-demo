@@ -11,7 +11,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "*"
+    - "api.dev.storefront-demo.com"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -19,7 +19,7 @@ metadata:
   name: accounts
 spec:
   hosts:
-  - "*"
+  - "api.dev.storefront-demo.com"
   gateways:
   - storefront-gateway
   http:

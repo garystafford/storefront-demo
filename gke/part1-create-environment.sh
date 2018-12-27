@@ -4,7 +4,7 @@
 
 export NAMESPACE="dev"
 export PROJECT="gke-confluent-atlas"
-export CLUSTER="istio-kafka-demo"
+export CLUSTER="storefront-api"
 export REGION="us-central1"
 export ZONE="us-central1-a"
 
@@ -27,6 +27,8 @@ time \
     --default-max-pods-per-node "110" \
     --addons HorizontalPodAutoscaling,HttpLoadBalancing,Istio \
     --istio-config auth=MTLS_PERMISSIVE \
+    --issue-client-certificate \
+    --metadata disable-legacy-endpoints=true \
     --enable-autoupgrade \
     --enable-autorepair
 

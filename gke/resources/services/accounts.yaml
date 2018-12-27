@@ -82,4 +82,3 @@ spec:
         ports:
         - containerPort: 8080
         imagePullPolicy: IfNotPresent #Always
-      restartPolicy: Always

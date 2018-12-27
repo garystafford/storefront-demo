@@ -4,7 +4,7 @@
 
 export NAMESPACE="dev"
 export PROJECT="gke-confluent-atlas"
-export CLUSTER="istio-kafka-demo"
+export CLUSTER="storefront-api"
 export REGION="us-central1"
 export ZONE="us-central1-a"
 
@@ -33,10 +33,6 @@ kubectl apply -n $NAMESPACE -f ../../storefront-secrets/confluent-cloud-kafka-se
 #   accounts-istio.yaml \
 #   && kubectl apply -f accounts-istio.yaml -n dev \
 #   && rm accounts-istio.yaml
-
-ccloud topic create accounts.customer.change
-ccloud topic create fulfillment.order.change
-ccloud topic create orders.order.fulfill
 
 kubectl apply -n $NAMESPACE -f ./resources/services/accounts.yaml
 kubectl apply -n $NAMESPACE -f ./resources/services/fulfillment.yaml
