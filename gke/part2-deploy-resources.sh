@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# part 2: deploy resources
+# part 2: deploy resources to dev namespace
 
 export NAMESPACE="dev"
 export PROJECT="gke-confluent-atlas"
@@ -18,7 +18,7 @@ export ZONE="us-central1-a"
 # gcloud compute firewall-rules create allow-gateway-http --allow tcp:$INGRESS_PORT
 # gcloud compute firewall-rules create allow-gateway-https --allow tcp:$SECURE_INGRESS_PORT
 
-kubectl apply -n $NAMESPACE -f ./resources/other/istio-gateway.yaml
+kubectl apply ./resources/other/istio-gateway.yaml
 
 kubectl apply -n $NAMESPACE -f ./resources/config/confluent-cloud-kafka-configmap.yaml
 kubectl apply -n $NAMESPACE -f ../../storefront-secrets/mongodb-atlas-secret.yaml
