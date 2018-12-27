@@ -11,7 +11,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "api.dev.storefront-demo.com"
+    - api.dev.storefront-demo.com
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -19,7 +19,7 @@ metadata:
   name: accounts
 spec:
   hosts:
-  - "api.dev.storefront-demo.com"
+  - api.dev.storefront-demo.com
   gateways:
   - storefront-gateway
   http:
@@ -30,7 +30,7 @@ spec:
     - destination:
         port:
           number: 8080
-        host: accounts
+        host: accounts.dev.svc.cluster.local
   - match:
     - uri:
         prefix: /fulfillment
@@ -38,7 +38,7 @@ spec:
     - destination:
         port:
           number: 8080
-        host: fulfillment
+        host: fulfillment.dev.svc.cluster.local
   - match:
     - uri:
         prefix: /orders
@@ -46,4 +46,4 @@ spec:
     - destination:
         port:
           number: 8080
-        host: orders
+        host: orders.dev.svc.cluster.local
