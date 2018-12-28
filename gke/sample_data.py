@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Create sample data by hitting Storefront sample endpoints,
+# Create sample data by hitting Storefront sample endpoints
 
 # usage: python3 ./refresh.py
 
