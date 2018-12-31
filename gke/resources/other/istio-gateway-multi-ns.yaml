@@ -13,7 +13,7 @@ spec:
     hosts:
     - api.dev.storefront-demo.com
     - api.test.storefront-demo.com
-    - api.prod.storefront-demo.com
+    - api.staging.storefront-demo.com
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
