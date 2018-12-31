@@ -16,6 +16,9 @@ def main():
 def create_sample_data():
     storefront_api_url = 'http://api.dev.storefront-demo.com'
     sample_urls = [
+        'accounts/actuator/health',
+        'orders/actuator/health',
+        'fulfillment/actuator/health',
         'accounts/customers/sample',
         'orders/customers/sample/orders',
         'orders/customers/sample/fulfill',
@@ -25,10 +28,11 @@ def create_sample_data():
         'fulfillment/fulfillments/sample/receive']
 
     for sample_url in sample_urls:
-        r = requests.get(storefront_api_url + '/' + sample_url)
-        print(r.text)
-        time.sleep(5)
-    print('\n')
+        request_endpoint = storefront_api_url + '/' + sample_url
+        r = requests.get(request_endpoint)
+
+        print(request_endpoint + '\n' + r.text + '\n' + '---')
+        time.sleep(3)
 
 
 if __name__ == "__main__":
