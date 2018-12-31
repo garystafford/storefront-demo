@@ -38,12 +38,12 @@ gcloud container clusters get-credentials $CLUSTER \
 
 kubectl config current-context
 
-# gcloud container clusters describe $CLUSTER \
-#   --zone $ZONE | \
-#   grep -e clusterIpv4Cidr -e servicesIpv4Cidr
-
-# create dev namespace
-kubectl apply -f ./resources/other/namespace-$NAMESPACE.yaml
+# create dev, test, staging namespaces
+kubectl apply -f ./resources/other/namespaces-all.yaml
 
 # enable automatic instio injection
-# kubectl label namespace $NAMESPACE istio-injection=enabled
+namespaces=( dev test staging )
+for ns in "${namespaces[@]}"
+do
+	kubectl label namespace $ns istio-injection=enabled
+done

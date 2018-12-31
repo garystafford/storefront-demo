@@ -8,31 +8,33 @@ export CLUSTER="storefront-api"
 export REGION="us-central1"
 export ZONE="us-central1-a"
 
-# export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-# export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
-# export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].port}')
+kubectl apply -f ./resources/other/istio-gateway-multi-ns.yaml
 
-# export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
-# export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
-
-# gcloud compute firewall-rules create allow-gateway-http --allow tcp:$INGRESS_PORT
-# gcloud compute firewall-rules create allow-gateway-https --allow tcp:$SECURE_INGRESS_PORT
-
-kubectl apply ./resources/other/istio-gateway.yaml
+kubectl delete configmap confluent-cloud-kafka -n $NAMESPACE
+kubectl delete secret mongodb-atlas -n $NAMESPACE
+kubectl delete secret confluent-cloud-kafka -n $NAMESPACE
 
 kubectl apply -n $NAMESPACE -f ./resources/config/confluent-cloud-kafka-configmap.yaml
-kubectl apply -n $NAMESPACE -f ../../storefront-secrets/mongodb-atlas-secret.yaml
-kubectl apply -n $NAMESPACE -f ../../storefront-secrets/confluent-cloud-kafka-secret.yaml
+kubectl get configmap confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
+  | kubectl apply -n test -f -
+kubectl get configmap confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
+  | kubectl apply -n staging -f -
 
-# IP_RANGES="10.44.0.0/14,10.47.240.0/20"
-#
-# istioctl kube-inject –kubeconfig "~/.kube/config" \
-#   -f ./resources/services/accounts.yaml \
-#   --injectConfigFile inject-config.yaml \
-#   --meshConfigFile mesh-config.yaml > \
-#   accounts-istio.yaml \
-#   && kubectl apply -f accounts-istio.yaml -n dev \
-#   && rm accounts-istio.yaml
+kubectl apply -n $NAMESPACE -f ../../storefront-secrets/dev/mongodb-atlas-secret.yaml
+kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
+  | kubectl apply -n test -f -
+kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
+  | kubectl apply -n staging -f -
+
+kubectl apply -n $NAMESPACE -f ../../storefront-secrets/dev/confluent-cloud-kafka-secret.yaml
+kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
+  | kubectl apply -n test -f -
+kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
+  | kubectl apply -n staging -f -
+
+kubectl delete deployment accounts -n $NAMESPACE
+kubectl delete deployment fulfillment -n $NAMESPACE
+kubectl delete deployment orders -n $NAMESPACE
 
 kubectl apply -n $NAMESPACE -f ./resources/services/accounts.yaml
 kubectl apply -n $NAMESPACE -f ./resources/services/fulfillment.yaml

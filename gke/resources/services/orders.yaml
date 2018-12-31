@@ -18,7 +18,9 @@ metadata:
   labels:
     app: orders
 spec:
-  replicas: 2
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: orders
@@ -26,8 +28,8 @@ spec:
     metadata:
       labels:
         app: orders
-      # annotations:
-      #   sidecar.istio.io/inject: "true"
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: orders

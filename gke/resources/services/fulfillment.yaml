@@ -18,7 +18,9 @@ metadata:
   labels:
     app: fulfillment
 spec:
-  replicas: 2
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: fulfillment
@@ -26,8 +28,8 @@ spec:
     metadata:
       labels:
         app: fulfillment
-      # annotations:
-      #   sidecar.istio.io/inject: "true"
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: fulfillment
