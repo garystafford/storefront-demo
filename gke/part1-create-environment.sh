@@ -32,6 +32,7 @@ time \
     --enable-autoupgrade \
     --enable-autorepair
 
+# get cluster creds
 gcloud container clusters get-credentials $CLUSTER \
   --zone $ZONE \
   --project $PROJECT
