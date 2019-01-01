@@ -5,7 +5,7 @@ metadata:
   namespace: dev
 spec:
   hosts:
-  - storefront-cluster-m0-xebnu.gcp.mongodb.net
+  - your_cluster_url.gcp.mongodb.net
   ports:
   - name: mongo
     number: 27017

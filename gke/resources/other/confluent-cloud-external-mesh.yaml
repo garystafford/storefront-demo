@@ -5,7 +5,7 @@ metadata:
   namespace: dev
 spec:
   hosts:
-  - pkc-lo894.us-central1.gcp.confluent.cloud
+  - your_cluster_url.gcp.confluent.cloud
   ports:
   - name: kafka
     number: 9092
