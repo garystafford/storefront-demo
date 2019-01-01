@@ -5,7 +5,7 @@ metadata:
   namespace: dev
 spec:
   hosts:
-  - your_cluster_url.gcp.mongodb.net
+  - <your_cluster_url.gcp.mongodb.net>
   ports:
   - name: mongo
     number: 27017
