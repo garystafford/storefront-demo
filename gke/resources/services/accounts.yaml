@@ -28,8 +28,8 @@ spec:
     metadata:
       labels:
         app: accounts
-      # annotations:
-      #   sidecar.istio.io/inject: "true"
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - name: accounts
@@ -83,4 +83,4 @@ spec:
               key: security.protocol
         ports:
         - containerPort: 8080
-        imagePullPolicy: IfNotPresent #Always
+        imagePullPolicy: IfNotPresent
