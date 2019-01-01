@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: mongdb-atlas-external-mesh
+  namespace: dev
+spec:
+  hosts:
+  - storefront-cluster-m0-xebnu.gcp.mongodb.net
+  ports:
+  - name: mongo
+    number: 27017
+    protocol: MONGO
+  location: MESH_EXTERNAL
+  resolution: NONE

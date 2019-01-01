@@ -41,3 +41,6 @@ kubectl config current-context
 
 # create dev namespace
 kubectl apply -f ./resources/other/namespace-$NAMESPACE.yaml
+
+# enable istio automatic sidecar injection
+kubectl label namespace $NAMESPACE istio-injection=enabled
