@@ -18,7 +18,7 @@ metadata:
   labels:
     app: orders
 spec:
-  replicas: 1
+  replicas: 2
   strategy:
     type: Recreate
   selector:
@@ -85,4 +85,4 @@ spec:
               key: security.protocol
         ports:
         - containerPort: 8080
-        imagePullPolicy: IfNotPresent #Always
+        imagePullPolicy: IfNotPresent

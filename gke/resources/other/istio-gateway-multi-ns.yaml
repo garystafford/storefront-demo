@@ -6,14 +6,39 @@ spec:
   selector:
     istio: ingressgateway
   servers:
+  # - port:
+  #     number: 80
+  #     name: http
+  #     protocol: HTTP
+  #   hosts:
+  #   - api.dev.storefront-demo.com
+  #   - api.test.storefront-demo.com
+  #   - api.staging.storefront-demo.com
   - port:
-      number: 80
-      name: http
-      protocol: HTTP
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
+      privateKey: /etc/istio/ingressgateway-certs/tls.key
     hosts:
     - api.dev.storefront-demo.com
     - api.test.storefront-demo.com
     - api.staging.storefront-demo.com
+  # - port:
+  #     number: 443
+  #     name: https
+  #     protocol: HTTPS
+  #   tls:
+  #     mode: MUTUAL
+  #     serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
+  #     privateKey: /etc/istio/ingressgateway-certs/tls.key
+  #     caCertificates: /etc/istio/ingressgateway-ca-certs/ca_bundle.crt
+  #   hosts:
+  #   - api.dev.storefront-demo.com
+  #   - api.test.storefront-demo.com
+  #   - api.staging.storefront-demo.com
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
