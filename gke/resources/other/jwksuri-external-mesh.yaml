@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: jwksuri-external-mesh
+  namespace: dev
+spec:
+  hosts:
+  - storefront-demo.auth0.com
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+  location: MESH_EXTERNAL
+  resolution: NONE
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: jwksuri-external-mesh
+spec:
+  hosts:
+  - storefront-demo.auth0.com
+  tls:
+  - match:
+    - port: 443
+      sni_hosts:
+      - storefront-demo.auth0.com
+    route:
+    - destination:
+        host: storefront-demo.auth0.com
+        port:
+          number: 443
+      weight: 100

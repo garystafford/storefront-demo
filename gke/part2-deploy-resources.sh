@@ -19,12 +19,10 @@ kubectl create -n istio-system secret tls istio-ingressgateway-certs \
 kubectl create -n istio-system secret generic istio-ingressgateway-ca-certs \
   --from-file $CERT_PATH/ca_bundle.crt
 
-echo "Sleeping for 5 seconds..."
-sleep 5
+# kubectl delete -n $NAMESPACE policy accounts-auth-policy
+kubectl apply -f ./resources/other/accounts-auth-policy.yaml
 
-kubectl apply -f ./resources/other/storefront-api-policy.yaml
-
-kubectl apply -f ./resources/other/istio-gateway-multi-ns.yaml
+kubectl apply -f ./resources/other/istio-gateway.yaml
 
 kubectl apply -f ../../storefront-secrets/mongodb-atlas-external-mesh.yaml
 kubectl apply -f ../../storefront-secrets/confluent-cloud-external-mesh.yaml
@@ -39,25 +37,22 @@ kubectl get configmap confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
 kubectl get configmap confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
   | kubectl apply -n staging -f -
 
-kubectl apply -n $NAMESPACE -f ../../storefront-secrets/mongodb-atlas-secret.yaml
-kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
-  | kubectl apply -n test -f -
-kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
-  | kubectl apply -n staging -f -
-
-kubectl apply -n $NAMESPACE -f ../../storefront-secrets/confluent-cloud-kafka-secret.yaml
-kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
-  | kubectl apply -n test -f -
-kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
-  | kubectl apply -n staging -f -
+# kubectl apply -n $NAMESPACE -f ../../storefront-secrets/mongodb-atlas-secret.yaml
+# kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
+#   | kubectl apply -n test -f -
+# kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
+#   | kubectl apply -n staging -f -
+#
+# kubectl apply -n $NAMESPACE -f ../../storefront-secrets/confluent-cloud-kafka-secret.yaml
+# kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
+#   | kubectl apply -n test -f -
+# kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
+#   | kubectl apply -n staging -f -
 
 # kubectl delete deployment accounts -n $NAMESPACE
 # kubectl delete deployment fulfillment -n $NAMESPACE
 # kubectl delete deployment orders -n $NAMESPACE
 
-echo "Sleeping for 5 seconds..."
-sleep 5
-
 kubectl apply -n $NAMESPACE -f ./resources/services/accounts.yaml
-kubectl apply -n $NAMESPACE -f ./resources/services/fulfillment.yaml
-kubectl apply -n $NAMESPACE -f ./resources/services/orders.yaml
+# kubectl apply -n $NAMESPACE -f ./resources/services/fulfillment.yaml
+# kubectl apply -n $NAMESPACE -f ./resources/services/orders.yaml

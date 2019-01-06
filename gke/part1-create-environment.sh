@@ -12,7 +12,7 @@ time \
   gcloud beta container \
     --project $PROJECT clusters create $CLUSTER \
     --zone $ZONE \
-    --username "admin" \
+    --no-enable-basic-auth \
     --cluster-version "1.11.5-gke.5" \
     --machine-type "n1-standard-1" \
     --image-type "COS" \
@@ -26,8 +26,7 @@ time \
     --subnetwork "projects/$PROJECT/regions/$REGION/subnetworks/default" \
     --default-max-pods-per-node "110" \
     --addons HorizontalPodAutoscaling,HttpLoadBalancing,Istio \
-    --istio-config auth=MTLS_PERMISSIVE \
-    --issue-client-certificate \
+    --istio-config auth=MTLS_STRICT \
     --metadata disable-legacy-endpoints=true \
     --enable-autoupgrade \
     --enable-autorepair
@@ -39,7 +38,7 @@ gcloud container clusters get-credentials $CLUSTER \
 kubectl config current-context
 
 # create dev, test, staging namespaces
-kubectl apply -f ./resources/other/namespaces-all.yaml
+kubectl apply -f ./resources/other/namespaces.yaml
 
 # enable automatic instio injection
 namespaces=( dev test staging )
