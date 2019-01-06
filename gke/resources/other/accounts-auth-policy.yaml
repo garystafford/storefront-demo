@@ -13,7 +13,7 @@
 #       audiences:
 #       - "https://api.storefront-demo.com/"
 #       issuer: "https://storefront-demo.auth0.com/"
-#       jwksUri: https://storefront-demo.auth0.com/.well-known/jwks.json"
+#       jwksUri: "https://storefront-demo.auth0.com/.well-known/jwks.json"
 #   principalBinding: USE_ORIGIN
 apiVersion: authentication.istio.io/v1alpha1
 kind: Policy
@@ -23,12 +23,14 @@ metadata:
 spec:
   targets:
   - name: accounts
-  peers:
-  - mtls:
+  # peers:
+  # - mtls:
   origins:
   - jwt:
+      # issuer: "api-consumer@gke-confluent-atlas.iam.gserviceaccount.com"
+      # jwksUri: "https://www.googleapis.com/service_accounts/v1/jwk/api-consumer@gke-confluent-atlas.iam.gserviceaccount.com"
       audiences:
       - "https://api.storefront-demo.com/"
       issuer: "https://storefront-demo.auth0.com/"
-      jwksUri: https://storefront-demo.auth0.com/.well-known/jwks.json"
+      jwksUri: "https://storefront-demo.auth0.com/.well-known/jwks.json"
   principalBinding: USE_ORIGIN

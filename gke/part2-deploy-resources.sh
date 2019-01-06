@@ -19,9 +19,6 @@ kubectl create -n istio-system secret tls istio-ingressgateway-certs \
 kubectl create -n istio-system secret generic istio-ingressgateway-ca-certs \
   --from-file $CERT_PATH/ca_bundle.crt
 
-# kubectl delete -n $NAMESPACE policy accounts-auth-policy
-kubectl apply -f ./resources/other/accounts-auth-policy.yaml
-
 kubectl apply -f ./resources/other/istio-gateway.yaml
 
 kubectl apply -f ../../storefront-secrets/mongodb-atlas-external-mesh.yaml
@@ -37,17 +34,21 @@ kubectl get configmap confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
 kubectl get configmap confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
   | kubectl apply -n staging -f -
 
-# kubectl apply -n $NAMESPACE -f ../../storefront-secrets/mongodb-atlas-secret.yaml
-# kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
-#   | kubectl apply -n test -f -
-# kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
-#   | kubectl apply -n staging -f -
-#
-# kubectl apply -n $NAMESPACE -f ../../storefront-secrets/confluent-cloud-kafka-secret.yaml
-# kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
-#   | kubectl apply -n test -f -
-# kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
-#   | kubectl apply -n staging -f -
+kubectl apply -n $NAMESPACE -f ../../storefront-secrets/mongodb-atlas-secret.yaml
+kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
+  | kubectl apply -n test -f -
+kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
+  | kubectl apply -n staging -f -
+
+kubectl apply -n $NAMESPACE -f ../../storefront-secrets/confluent-cloud-kafka-secret.yaml
+kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
+  | kubectl apply -n test -f -
+kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
+  | kubectl apply -n staging -f -
+
+kubectl apply -f ./resources/other/jwksuri-external-mesh.yaml
+kubectl delete -n $NAMESPACE policy accounts-auth-policy
+kubectl apply -f ./resources/other/accounts-auth-policy.yaml
 
 # kubectl delete deployment accounts -n $NAMESPACE
 # kubectl delete deployment fulfillment -n $NAMESPACE
