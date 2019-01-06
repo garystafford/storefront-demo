@@ -23,8 +23,8 @@ metadata:
 spec:
   targets:
   - name: accounts
-  # peers:
-  # - mtls:
+  peers:
+  - mtls:
   origins:
   - jwt:
       # issuer: "api-consumer@gke-confluent-atlas.iam.gserviceaccount.com"
