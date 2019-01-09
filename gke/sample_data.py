@@ -4,7 +4,6 @@
 
 # usage: python3 ./refresh.py
 
-from pprint import pprint
 import requests
 import time
 
