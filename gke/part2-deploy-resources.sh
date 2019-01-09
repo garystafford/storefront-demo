@@ -55,5 +55,5 @@ kubectl apply -f ./resources/other/accounts-auth-policy.yaml
 # kubectl delete deployment orders -n $NAMESPACE
 
 kubectl apply -n $NAMESPACE -f ./resources/services/accounts.yaml
-# kubectl apply -n $NAMESPACE -f ./resources/services/fulfillment.yaml
-# kubectl apply -n $NAMESPACE -f ./resources/services/orders.yaml
+kubectl apply -n $NAMESPACE -f ./resources/services/fulfillment.yaml
+kubectl apply -n $NAMESPACE -f ./resources/services/orders.yaml

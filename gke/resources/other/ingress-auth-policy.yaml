@@ -1,11 +1,11 @@
 apiVersion: authentication.istio.io/v1alpha1
 kind: Policy
 metadata:
-  name: accounts-auth-policy
-  namespace: dev
+  name: ingressgateway
+  namespace: istio-system
 spec:
   targets:
-  - name: accounts
+  - name: istio-ingressgateway
   peers:
   - mtls:
   origins:
