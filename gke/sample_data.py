@@ -14,7 +14,9 @@ def main():
 
 
 def create_sample_data():
-    storefront_api_url = 'http://api.dev.storefront-demo.com'
+    storefront_api_url = 'https://api.dev.storefront-demo.com'
+    jwt='token.goes.here'
+
     sample_urls = [
         'accounts/actuator/health',
         'orders/actuator/health',
@@ -27,9 +29,11 @@ def create_sample_data():
         'fulfillment/fulfillments/sample/in-transit',
         'fulfillment/fulfillments/sample/receive']
 
+    headers = {'Authorization': 'Bearer ' + jwt}
+
     for sample_url in sample_urls:
         request_endpoint = storefront_api_url + '/' + sample_url
-        r = requests.get(request_endpoint)
+        r = requests.get(request_endpoint, headers=headers, verify=False)
 
         print(request_endpoint + '\n' + r.text + '\n' + '---')
         time.sleep(3)
