@@ -46,9 +46,8 @@ kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
 kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
   | kubectl apply -n staging -f -
 
-kubectl apply -f ./resources/other/jwksuri-external-mesh.yaml
-kubectl delete -n $NAMESPACE policy accounts-auth-policy
-kubectl apply -f ./resources/other/accounts-auth-policy.yaml
+# kubectl delete -n $NAMESPACE policy ingress-auth-policy
+kubectl apply -f ./resources/other/ingress-auth-policy.yaml
 
 # kubectl delete deployment accounts -n $NAMESPACE
 # kubectl delete deployment fulfillment -n $NAMESPACE
