@@ -5,7 +5,6 @@
 
 # usage: python3 ./refresh.py
 
-from pprint import pprint
 import requests
 import time
 
@@ -33,10 +32,10 @@ def create_sample_data():
     headers = {'Authorization': 'Bearer ' + jwt}
 
     for sample_url in sample_urls:
-        request_endpoint = storefront_api_url + '/' + sample_url
+        request_endpoint = '{0}/{1}'.format(storefront_api_url, sample_url)
         r = requests.get(request_endpoint, headers=headers, verify=False)
 
-        print(request_endpoint + '\n' + r.text + '\n' + '---')
+        print('%s\n%s\n---' % (request_endpoint, r.text))
         time.sleep(3)
 
 
