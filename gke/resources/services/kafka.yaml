@@ -1,0 +1,138 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache-kafka
+  labels:
+    app: apache-kafka
+spec:
+  ports:
+  - name: http
+    port: 9092
+  selector:
+    app: apache-kafka
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: apache-kafka
+  labels:
+    app: apache-kafka
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: apache-kafka
+  template:
+    metadata:
+      labels:
+        app: apache-kafka
+      # annotations:
+      #   sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - name: apache-kafka
+        image: wurstmeister/kafka:latest
+        env:
+        - name: KAFKA_ADVERTISED_HOST_NAME
+          value: "apache-kafka"
+        - name: KAFKA_CREATE_TOPICS
+          value: "accounts.customer.change:1:1,fulfillment.order.change:1:1,orders.order.fulfill:1:1"
+        - name: KAFKA_LISTENERS
+          value: "PLAINTEXT://:9092"
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: "PLAINTEXT://apache-kafka:9092"
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: "zookeeper:2181"
+        - name: KAFKA_DELETE_TOPIC_ENABLE
+          value: "true"
+        ports:
+        - containerPort: 9092
+        imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper
+  labels:
+    app: zookeeper
+spec:
+  ports:
+  - name: http
+    port: 2181
+  selector:
+    app: zookeeper
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: zookeeper
+  labels:
+    app: zookeeper
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+      # annotations:
+      #   sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - name: zookeeper
+        image: wurstmeister/zookeeper:latest
+        ports:
+        - containerPort: 2181
+        imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-manager
+  labels:
+    app: kafka-manager
+spec:
+  ports:
+  - name: http
+    port: 9000
+  selector:
+    app: kafka-manager
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kafka-manager
+  labels:
+    app: kafka-manager
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kafka-manager
+  template:
+    metadata:
+      labels:
+        app: kafka-manager
+      # annotations:
+      #   sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - name: kafka-manager
+        image: hlebalbau/kafka-manager:latest
+        env:
+        - name: ZK_HOSTS
+          value: "zookeeper:2181"
+        - name: APPLICATION_SECRET
+          value: "random-secret"
+        # command: ["-Dpidfile.path=/dev/null"]
+        ports:
+        - containerPort: 9000
+        imagePullPolicy: IfNotPresent
