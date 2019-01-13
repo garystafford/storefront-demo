@@ -33,14 +33,14 @@ time \
     --enable-autoupgrade \
     --enable-autorepair
 
-# get cluster creds
+# Get cluster creds
 gcloud container clusters get-credentials $CLUSTER \
   --zone $ZONE --project $PROJECT
 
 kubectl config current-context
 
-# create dev namespace
+# Create dev Namespace
 kubectl apply -f ./resources/other/namespace-$NAMESPACE.yaml
 
-# enable istio automatic sidecar injection
+# Enable Istio automatic sidecar injection
 kubectl label namespace $NAMESPACE istio-injection=enabled
