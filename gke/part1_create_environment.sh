@@ -9,6 +9,7 @@ readonly CLUSTER='storefront-api'
 readonly REGION='us-central1'
 readonly ZONE='us-central1-a'
 
+# Create GKE cluster (time in foreground)
 time \
   gcloud beta container \
     --project $PROJECT clusters create $CLUSTER \
@@ -40,7 +41,7 @@ gcloud container clusters get-credentials $CLUSTER \
 kubectl config current-context
 
 # Create dev Namespace
-kubectl apply -f ./resources/other/namespace-$NAMESPACE.yaml
+kubectl apply -f ./resources/other/namespaces.yaml
 
-# Enable Istio automatic sidecar injection
+# Enable Istio automatic sidecar injection in Dev Namespace
 kubectl label namespace $NAMESPACE istio-injection=enabled
