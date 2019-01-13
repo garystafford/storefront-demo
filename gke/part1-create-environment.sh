@@ -1,12 +1,13 @@
 #!/bin/bash
+#
+# part 1: Create local Kubernetes cluster on GKE
 
-# part 1: create local dev environment on gke
-
-export NAMESPACE="dev"
-export PROJECT="gke-confluent-atlas"
-export CLUSTER="storefront-api"
-export REGION="us-central1"
-export ZONE="us-central1-a"
+# Constants - CHANGE ME!
+readonly NAMESPACE='dev'
+readonly PROJECT='gke-confluent-atlas'
+readonly CLUSTER='storefront-api'
+readonly REGION='us-central1'
+readonly ZONE='us-central1-a'
 
 time \
   gcloud beta container \
@@ -34,8 +35,7 @@ time \
 
 # get cluster creds
 gcloud container clusters get-credentials $CLUSTER \
-  --zone $ZONE \
-  --project $PROJECT
+  --zone $ZONE --project $PROJECT
 
 kubectl config current-context
 
