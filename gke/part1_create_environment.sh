@@ -1,12 +1,13 @@
 #!/bin/bash
+#
+# Part 1: Create local Kubernetes cluster on GKE
 
-# part 1: create local dev environment on gke
-
-export NAMESPACE="dev"
-export PROJECT="gke-confluent-atlas"
-export CLUSTER="storefront-api"
-export REGION="us-central1"
-export ZONE="us-central1-a"
+# Constants - CHANGE ME!
+readonly NAMESPACE='dev'
+readonly PROJECT='gke-confluent-atlas'
+readonly CLUSTER='storefront-api'
+readonly REGION='us-central1'
+readonly ZONE='us-central1-a'
 
 time \
   gcloud beta container \
@@ -32,17 +33,17 @@ time \
     --enable-autorepair
 
 gcloud container clusters get-credentials $CLUSTER \
-  --zone $ZONE \
-  --project $PROJECT
+  --zone $ZONE --project $PROJECT
 
 kubectl config current-context
 
-# create dev, test, staging namespaces
+# Create dev, test, staging Namespaces
 kubectl apply -f ./resources/other/namespaces.yaml
 
-# enable automatic instio injection
+# Enable automatic Istio sidecar injection
 namespaces=( dev test staging )
-for ns in "${namespaces[@]}"
+for ns in ${namespaces[@]}
 do
 	kubectl label namespace $ns istio-injection=enabled
 done
+# kubectl label namespace dev istio-injection=disabled --overwrite

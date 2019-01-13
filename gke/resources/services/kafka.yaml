@@ -28,23 +28,27 @@ spec:
     metadata:
       labels:
         app: apache-kafka
-      # annotations:
-      #   sidecar.istio.io/inject: "true"
+      annotations:
+        sidecar.istio.io/inject: "false"
     spec:
       containers:
       - name: apache-kafka
         image: wurstmeister/kafka:latest
         env:
+        - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+          value: "INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT"
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: "INSIDE://:9092,OUTSIDE://apache-kafka:9094"
+        - name: KAFKA_LISTENERS
+          value: "INSIDE://:9092,OUTSIDE://:9094"
+        - name: KAFKA_INTER_BROKER_LISTENER_NAME
+          value: "INSIDE"
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: "zookeeper:2181"
         - name: KAFKA_ADVERTISED_HOST_NAME
           value: "apache-kafka"
         - name: KAFKA_CREATE_TOPICS
           value: "accounts.customer.change:1:1,fulfillment.order.change:1:1,orders.order.fulfill:1:1"
-        - name: KAFKA_LISTENERS
-          value: "PLAINTEXT://:9092"
-        - name: KAFKA_ADVERTISED_LISTENERS
-          value: "PLAINTEXT://apache-kafka:9092"
-        - name: KAFKA_ZOOKEEPER_CONNECT
-          value: "zookeeper:2181"
         - name: KAFKA_DELETE_TOPIC_ENABLE
           value: "true"
         ports:
@@ -81,8 +85,8 @@ spec:
     metadata:
       labels:
         app: zookeeper
-      # annotations:
-      #   sidecar.istio.io/inject: "true"
+      annotations:
+        sidecar.istio.io/inject: "false"
     spec:
       containers:
       - name: zookeeper
@@ -121,8 +125,8 @@ spec:
     metadata:
       labels:
         app: kafka-manager
-      # annotations:
-      #   sidecar.istio.io/inject: "true"
+      annotations:
+        sidecar.istio.io/inject: "false"
     spec:
       containers:
       - name: kafka-manager
@@ -132,7 +136,6 @@ spec:
           value: "zookeeper:2181"
         - name: APPLICATION_SECRET
           value: "random-secret"
-        # command: ["-Dpidfile.path=/dev/null"]
         ports:
         - containerPort: 9000
         imagePullPolicy: IfNotPresent

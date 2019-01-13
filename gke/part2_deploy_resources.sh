@@ -5,8 +5,8 @@
 export NAMESPACE="dev"
 export PROJECT="gke-confluent-atlas"
 export CLUSTER="storefront-api"
-export REGION="us-central1"
-export ZONE="us-central1-a"
+export REGION="us-east1"
+export ZONE="us-east1-b"
 
 # kubectl delete -n istio-system secret istio-ingressgateway-certs
 # kubectl delete -n istio-system secret istio-ingressgateway-ca-certs
@@ -21,8 +21,8 @@ kubectl create -n istio-system secret generic istio-ingressgateway-ca-certs \
 
 kubectl apply -f ./resources/other/istio-gateway.yaml
 
-kubectl apply -f ../../storefront-secrets/mongodb-atlas-external-mesh.yaml
-kubectl apply -f ../../storefront-secrets/confluent-cloud-external-mesh.yaml
+kubectl apply -n $NAMESPACE -f ../../storefront-secrets/mongodb-atlas-external-mesh.yaml
+kubectl apply -n $NAMESPACE -f ../../storefront-secrets/confluent-cloud-external-mesh.yaml
 
 # kubectl delete configmap confluent-cloud-kafka -n $NAMESPACE
 # kubectl delete secret mongodb-atlas -n $NAMESPACE
@@ -46,13 +46,13 @@ kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
 kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
   | kubectl apply -n staging -f -
 
-# kubectl delete -n $NAMESPACE policy ingress-auth-policy
 kubectl apply -f ./resources/other/ingress-auth-policy.yaml
+# kubectl apply -n $NAMESPACE -f ./resources/other/accounts-auth-policy.yaml
 
 # kubectl delete deployment accounts -n $NAMESPACE
 # kubectl delete deployment fulfillment -n $NAMESPACE
 # kubectl delete deployment orders -n $NAMESPACE
 
 kubectl apply -n $NAMESPACE -f ./resources/services/accounts.yaml
-kubectl apply -n $NAMESPACE -f ./resources/services/fulfillment.yaml
-kubectl apply -n $NAMESPACE -f ./resources/services/orders.yaml
+# kubectl apply -n $NAMESPACE -f ./resources/services/fulfillment.yaml
+# kubectl apply -n $NAMESPACE -f ./resources/services/orders.yaml

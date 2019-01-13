@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: fulfillment
-        image: garystafford/storefront-fulfillment:gke-2.2.0
+        image: garystafford/storefront-fulfillment:gke-2.2.1
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "gke"

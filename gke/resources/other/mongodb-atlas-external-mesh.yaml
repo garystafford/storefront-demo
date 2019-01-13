@@ -2,7 +2,6 @@ apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
   name: mongdb-atlas-external-mesh
-  namespace: dev
 spec:
   hosts:
   - <your_cluster_url.gcp.mongodb.net>
