@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# part 1: Create local Kubernetes cluster on GKE
+# Part 1: Create local Kubernetes cluster on GKE
 
 # Constants - CHANGE ME!
 readonly NAMESPACE='dev'
