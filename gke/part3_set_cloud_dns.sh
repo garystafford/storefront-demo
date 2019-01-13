@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Update Cloud DNS A Records for new GKE cluster
+# Part 3: Update Cloud DNS A Records for new GKE cluster
 
 # Constants - CHANGE ME!
 readonly PROJECT='gke-confluent-atlas'

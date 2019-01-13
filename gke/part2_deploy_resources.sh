@@ -1,20 +1,20 @@
 #!/bin/bash
+#
+# Part 2: Deploy resources to dev Namespace
 
-# part 2: deploy resources to dev namespace
-
-export NAMESPACE="dev"
-export PROJECT="gke-confluent-atlas"
-export CLUSTER="storefront-api"
-export REGION="us-east1"
-export ZONE="us-east1-b"
+# Constants - CHANGE ME!
+readonly NAMESPACE='dev'
+readonly PROJECT='gke-confluent-atlas'
+readonly CLUSTER='storefront-api'
+readonly REGION='us-central1'
+readonly ZONE='us-central1-a'
 
 # kubectl delete -n istio-system secret istio-ingressgateway-certs
 # kubectl delete -n istio-system secret istio-ingressgateway-ca-certs
 
 export CERT_PATH=~/Documents/Articles/gke-kafka/sslforfree
 kubectl create -n istio-system secret tls istio-ingressgateway-certs \
-  --key $CERT_PATH/private.key \
-  --cert $CERT_PATH/certificate.crt
+  --key $CERT_PATH/private.key --cert $CERT_PATH/certificate.crt
 
 kubectl create -n istio-system secret generic istio-ingressgateway-ca-certs \
   --from-file $CERT_PATH/ca_bundle.crt
