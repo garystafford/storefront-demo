@@ -1,12 +1,13 @@
 #!/bin/bash
+#
+# Part 2: Deploy resources to dev Namespace
 
-# part 2: deploy resources to dev namespace
-
-export NAMESPACE="dev"
-export PROJECT="gke-confluent-atlas"
-export CLUSTER="storefront-api"
-export REGION="us-central1"
-export ZONE="us-central1-a"
+# Constants - CHANGE ME!
+readonly NAMESPACE='dev'
+readonly PROJECT='gke-confluent-atlas'
+readonly CLUSTER='storefront-api'
+readonly REGION='us-central1'
+readonly ZONE='us-central1-a'
 
 kubectl apply -f ./resources/other/istio-gateway.yaml
 kubectl apply -f ./resources/other/mongodb-atlas-external-mesh.yaml
