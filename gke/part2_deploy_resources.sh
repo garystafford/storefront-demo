@@ -1,58 +1,38 @@
 #!/bin/bash
 #
-# Part 2: Deploy resources to dev Namespace
+# Part 2: Deploy resources
 
 # Constants - CHANGE ME!
-readonly NAMESPACE='dev'
-readonly PROJECT='gke-confluent-atlas'
-readonly CLUSTER='storefront-api'
-readonly REGION='us-central1'
-readonly ZONE='us-central1-a'
+readonly CERT_PATH=~/Documents/Articles/gke-kafka/sslforfree_wildcard
+readonly NAMESPACES=( 'dev' 'test' 'uat' )
 
-# kubectl delete -n istio-system secret istio-ingressgateway-certs
-# kubectl delete -n istio-system secret istio-ingressgateway-ca-certs
+kubectl delete -n istio-system secret istio-ingressgateway-certs
+kubectl delete -n istio-system secret istio-ingressgateway-ca-certs
 
-export CERT_PATH=~/Documents/Articles/gke-kafka/sslforfree
+# Require HTTPS for all access
 kubectl create -n istio-system secret tls istio-ingressgateway-certs \
   --key $CERT_PATH/private.key --cert $CERT_PATH/certificate.crt
 
 kubectl create -n istio-system secret generic istio-ingressgateway-ca-certs \
   --from-file $CERT_PATH/ca_bundle.crt
 
+# Istio Gateway and three ServiceEntry resources
 kubectl apply -f ./resources/other/istio-gateway.yaml
 
-kubectl apply -n $NAMESPACE -f ../../storefront-secrets/mongodb-atlas-external-mesh.yaml
-kubectl apply -n $NAMESPACE -f ../../storefront-secrets/confluent-cloud-external-mesh.yaml
+# Only apply Auth to UAT (client-facing)
+kubectl apply -f ./resources/other/uat-auth-policy.yaml
 
-# kubectl delete configmap confluent-cloud-kafka -n $NAMESPACE
-# kubectl delete secret mongodb-atlas -n $NAMESPACE
-# kubectl delete secret confluent-cloud-kafka -n $NAMESPACE
+# Loop through each non-prod Namespace (environment)
+# Re-use same secrets for Demo only
+for namespace in ${NAMESPACES[@]}; do
+  kubectl apply -n $namespace -f ./resources/config/confluent-cloud-kafka-configmap.yaml
+  kubectl apply -n $namespace -f ../../storefront-secrets/mongodb-atlas-secret.yaml
+  kubectl apply -n $namespace -f ../../storefront-secrets/confluent-cloud-kafka-secret.yaml
 
-kubectl apply -n $NAMESPACE -f ./resources/config/confluent-cloud-kafka-configmap.yaml
-kubectl get configmap confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
-  | kubectl apply -n test -f -
-kubectl get configmap confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
-  | kubectl apply -n staging -f -
+  kubectl apply -n $namespace -f ../../storefront-secrets/mongodb-atlas-external-mesh.yaml
+  kubectl apply -n $namespace -f ../../storefront-secrets/confluent-cloud-external-mesh.yaml
 
-kubectl apply -n $NAMESPACE -f ../../storefront-secrets/mongodb-atlas-secret.yaml
-kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
-  | kubectl apply -n test -f -
-kubectl get secret mongodb-atlas -n $NAMESPACE --export -o yaml \
-  | kubectl apply -n staging -f -
-
-kubectl apply -n $NAMESPACE -f ../../storefront-secrets/confluent-cloud-kafka-secret.yaml
-kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
-  | kubectl apply -n test -f -
-kubectl get secret confluent-cloud-kafka -n $NAMESPACE --export -o yaml \
-  | kubectl apply -n staging -f -
-
-kubectl apply -f ./resources/other/ingress-auth-policy.yaml
-# kubectl apply -n $NAMESPACE -f ./resources/other/accounts-auth-policy.yaml
-
-# kubectl delete deployment accounts -n $NAMESPACE
-# kubectl delete deployment fulfillment -n $NAMESPACE
-# kubectl delete deployment orders -n $NAMESPACE
-
-kubectl apply -n $NAMESPACE -f ./resources/services/accounts.yaml
-# kubectl apply -n $NAMESPACE -f ./resources/services/fulfillment.yaml
-# kubectl apply -n $NAMESPACE -f ./resources/services/orders.yaml
+  kubectl apply -n $namespace -f ./resources/services/accounts.yaml
+  kubectl apply -n $namespace -f ./resources/services/fulfillment.yaml
+  kubectl apply -n $namespace -f ./resources/services/orders.yaml
+done

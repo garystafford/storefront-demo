@@ -7,7 +7,7 @@ spec:
   targets:
   - name: istio-ingressgateway
   peers:
-  - mtls:
+  - mtls: {}
   origins:
   - jwt:
       audiences:

@@ -1,13 +1,11 @@
 apiVersion: authentication.istio.io/v1alpha1
 kind: Policy
 metadata:
-  name: accounts-auth-policy
-  namespace: dev
+  name: default
+  namespace: uat
 spec:
-  targets:
-  - name: accounts
   peers:
-  - mtls:
+  - mtls: {}
   origins:
   - jwt:
       audiences:

@@ -18,7 +18,7 @@ metadata:
   labels:
     app: accounts
 spec:
-  replicas: 2
+  replicas: 3
   strategy:
     type: Recreate
   selector:

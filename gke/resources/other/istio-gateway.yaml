@@ -6,14 +6,6 @@ spec:
   selector:
     istio: ingressgateway
   servers:
-  # - port:
-  #     number: 80
-  #     name: http
-  #     protocol: HTTP
-  #   hosts:
-  #   - api.dev.storefront-demo.com
-  #   - api.test.storefront-demo.com
-  #   - api.staging.storefront-demo.com
   - port:
       number: 443
       name: https
@@ -23,22 +15,9 @@ spec:
       serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
       privateKey: /etc/istio/ingressgateway-certs/tls.key
     hosts:
-    - api.dev.storefront-demo.com
-    - api.test.storefront-demo.com
-    - api.staging.storefront-demo.com
-  # - port:
-  #     number: 443
-  #     name: https
-  #     protocol: HTTPS
-  #   tls:
-  #     mode: MUTUAL
-  #     serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
-  #     privateKey: /etc/istio/ingressgateway-certs/tls.key
-  #     caCertificates: /etc/istio/ingressgateway-ca-certs/ca_bundle.crt
-  #   hosts:
-  #   - api.dev.storefront-demo.com
-  #   - api.test.storefront-demo.com
-  #   - api.staging.storefront-demo.com
+    - dev.api.storefront-demo.com
+    - test.api.storefront-demo.com
+    - uat.api.storefront-demo.com
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -46,7 +25,7 @@ metadata:
   name: storefront-dev
 spec:
   hosts:
-  - api.dev.storefront-demo.com
+  - dev.api.storefront-demo.com
   gateways:
   - storefront-gateway
   http:
@@ -81,7 +60,7 @@ metadata:
   name: storefront-test
 spec:
   hosts:
-  - api.test.storefront-demo.com
+  - test.api.storefront-demo.com
   gateways:
   - storefront-gateway
   http:
@@ -113,10 +92,10 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: storefront-staging
+  name: storefront-uat
 spec:
   hosts:
-  - api.staging.storefront-demo.com
+  - uat.api.storefront-demo.com
   gateways:
   - storefront-gateway
   http:
@@ -127,7 +106,7 @@ spec:
     - destination:
         port:
           number: 8080
-        host: accounts.staging.svc.cluster.local
+        host: accounts.uat.svc.cluster.local
   - match:
     - uri:
         prefix: /fulfillment
@@ -135,7 +114,7 @@ spec:
     - destination:
         port:
           number: 8080
-        host: fulfillment.staging.svc.cluster.local
+        host: fulfillment.uat.svc.cluster.local
   - match:
     - uri:
         prefix: /orders
@@ -143,4 +122,4 @@ spec:
     - destination:
         port:
           number: 8080
-        host: orders.staging.svc.cluster.local
+        host: orders.uat.svc.cluster.local
