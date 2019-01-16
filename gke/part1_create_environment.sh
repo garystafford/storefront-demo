@@ -6,10 +6,10 @@
 readonly PROJECT='gke-confluent-atlas'
 readonly CLUSTER='storefront-api-non-prod'
 readonly REGION='us-central1'
+readonly MASTER_AUTH_NETS='72.231.208.0/24'
 readonly NAMESPACES=( 'dev' 'test' 'uat' )
 
 # Build a 3-node, single-region, multi-zone GKE cluster
-# https://cloud.google.com/kubernetes-engine/docs/how-to/private-clusters
 time gcloud beta container \
   --project $PROJECT clusters create $CLUSTER \
   --region $REGION \
@@ -24,9 +24,8 @@ time gcloud beta container \
   --num-nodes "1" \
   --enable-stackdriver-kubernetes \
   --enable-ip-alias \
-  --enable-private-nodes \
   --enable-master-authorized-networks \
-  --master-authorized-networks 72.231.208.107/32 \
+  --master-authorized-networks $MASTER_AUTH_NETS \
   --master-ipv4-cidr "172.16.0.0/28" \
   --network "projects/${PROJECT}/global/networks/default" \
   --subnetwork "projects/${PROJECT}/regions/${REGION}/subnetworks/default" \
@@ -37,6 +36,7 @@ time gcloud beta container \
   --enable-autoupgrade \
   --enable-autorepair
 
+# Get cluster credentials
 gcloud container clusters get-credentials $CLUSTER \
   --region $REGION --project $PROJECT
 

@@ -21,5 +21,4 @@ docker push $GCP_HOST/$PROJECT/storefront-accounts:gke-2.2.0
 docker push $GCP_HOST/$PROJECT/storefront-orders:gke-2.2.0
 docker push $GCP_HOST/$PROJECT/storefront-fulfillment:gke-2.2.1
 
-gcloud container images list \
-  --repository $GCP_HOST/$PROJECT
+gcloud container images list --repository $GCP_HOST/$PROJECT

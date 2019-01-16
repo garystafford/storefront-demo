@@ -23,7 +23,7 @@ kubectl apply -f ./resources/other/istio-gateway.yaml
 kubectl apply -f ./resources/other/dev-auth-policy.yaml
 kubectl apply -f ./resources/other/test-auth-policy.yaml
 kubectl apply -f ./resources/other/uat-auth-policy.yaml
-kubectl apply -f ./resources/other/jwksuri-external-mesh.yaml
+# kubectl apply -f ./resources/other/jwksuri-external-mesh.yaml
 
 # Loop through each non-prod Namespace (environment)
 # Re-use same secrets for Demo only
