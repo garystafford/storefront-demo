@@ -6,10 +6,9 @@
 readonly PROJECT='gke-confluent-atlas'
 readonly CLUSTER='storefront-api-non-prod'
 readonly REGION='us-central1'
-readonly ZONE='us-central1-a'
 
 # Delete GKE cluster (time in foreground)
-time yes | gcloud beta container clusters delete $CLUSTER --zone $ZONE
+time yes | gcloud beta container clusters delete $CLUSTER --region $REGION
 
 # Confirm network resources are also deleted
 gcloud compute forwarding-rules list

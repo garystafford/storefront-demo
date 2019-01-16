@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
   name: jwksuri-external-mesh
-  namespace: dev
+  namespace: uat
 spec:
   hosts:
   - storefront-demo.auth0.com

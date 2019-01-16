@@ -18,7 +18,7 @@ metadata:
   labels:
     app: fulfillment
 spec:
-  replicas: 3
+  replicas: 1
   strategy:
     type: Recreate
   selector:
@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
       - name: fulfillment
-        image: garystafford/storefront-fulfillment:gke-2.2.1
+        image: gcr.io/gke-confluent-atlas/storefront-fulfillment:gke-2.2.1
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "gke"

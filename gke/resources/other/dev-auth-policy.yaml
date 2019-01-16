@@ -2,14 +2,14 @@ apiVersion: authentication.istio.io/v1alpha1
 kind: Policy
 metadata:
   name: default
-  namespace: uat
+  namespace: dev
 spec:
   peers:
   - mtls: {}
   origins:
   - jwt:
       audiences:
-      - "storefront-api-uat"
+      - "storefront-api-dev-test"
       issuer: "https://storefront-demo.auth0.com/"
       jwksUri: "https://storefront-demo.auth0.com/.well-known/jwks.json"
   principalBinding: USE_ORIGIN

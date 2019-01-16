@@ -8,11 +8,11 @@ readonly DOMAIN='storefront-demo.com'
 readonly ZONE='storefront-demo-com-zone'
 readonly REGION='us-central1'
 readonly TTL=300
-readonly RECORDS=('dev.api' 'test.api' 'uat.api')
+readonly RECORDS=('dev' 'test' 'uat')
 
-# Get load balancer IP address
+# Get load balancer IP address from first record
 readonly OLD_IP=$(gcloud dns record-sets list \
-  --filter "name=${RECORDS[0]}.${DOMAIN}." --zone $ZONE \
+  --filter "name=${RECORDS[0]}.api.${DOMAIN}." --zone $ZONE \
   | awk 'NR==2 {print $4}')
 
 readonly NEW_IP=$(gcloud compute forwarding-rules list \
@@ -26,14 +26,14 @@ echo "New LB IP Address: ${NEW_IP}"
 gcloud dns record-sets transaction start --zone $ZONE
 
 for record in ${RECORDS[@]}; do
-  echo "${record}.${DOMAIN}."
+  echo "${record}.api.${DOMAIN}."
 
   gcloud dns record-sets transaction remove \
-    --name "${record}.${DOMAIN}." --ttl $TTL \
+    --name "${record}.api.${DOMAIN}." --ttl $TTL \
     --type A --zone $ZONE "${OLD_IP}"
 
   gcloud dns record-sets transaction add \
-    --name "${record}.${DOMAIN}." --ttl $TTL \
+    --name "${record}.api.${DOMAIN}." --ttl $TTL \
     --type A --zone $ZONE "${NEW_IP}"
 done
 
