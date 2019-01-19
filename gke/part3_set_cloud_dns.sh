@@ -15,9 +15,6 @@ if [ $(gcloud compute forwarding-rules list --filter "region:($REGION)" | wc -l 
   exit 1
 fi
 
-gcloud compute forwarding-rules list \
-  --filter "region:($REGION)"  | wc -l
-
 # Get load balancer IP address from first record
 readonly OLD_IP=$(gcloud dns record-sets list \
     --filter "name=${RECORDS[0]}.api.${DOMAIN}." --zone $ZONE \
