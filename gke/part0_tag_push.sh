@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Part 0: Push existing Dckerhub images to Google Container Registry (GCR)
+# Part 0: Push existing Dockerhub images to Google Container Registry (GCR)
 
 # Constants - CHANGE ME!
 readonly PROJECT='gke-confluent-atlas'
