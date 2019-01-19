@@ -24,7 +24,6 @@ kubectl apply -f ./resources/other/auth-policy-dev.yaml
 kubectl apply -f ./resources/other/auth-policy-test.yaml
 kubectl apply -f ./resources/other/auth-policy-uat.yaml
 # kubectl apply -f ./resources/other/auth-policy-ingressgateway.yaml
-# kubectl apply -f ./resources/other/jwksuri-external-mesh.yaml
 
 # Loop through each non-prod Namespace (environment)
 # Re-use same resources (incld. credentials) for all environments, just for the demo

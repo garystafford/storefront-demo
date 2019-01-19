@@ -34,6 +34,23 @@ spec:
       containers:
       - name: accounts
         image: gcr.io/gke-confluent-atlas/storefront-accounts:gke-2.2.0
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "100m"
+          limits:
+            memory: "500Mi"
+            cpu: "250m"
+        # readinessProbe:
+        #   httpGet:
+        #     port: 8080
+        #     path: /accounts/actuator/health
+        #     scheme: HTTP
+        #   initialDelaySeconds: 30
+        #   periodSeconds: 5
+        #   successThreshold: 1
+        #   failureThreshold: 2
+        #   timeoutSeconds: 2
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "gke"

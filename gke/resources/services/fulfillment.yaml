@@ -34,6 +34,13 @@ spec:
       containers:
       - name: fulfillment
         image: gcr.io/gke-confluent-atlas/storefront-fulfillment:gke-2.2.1
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "100m"
+          limits:
+            memory: "500Mi"
+            cpu: "250m"
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "gke"
