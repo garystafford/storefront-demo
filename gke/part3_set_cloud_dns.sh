@@ -10,6 +10,7 @@ readonly REGION='us-central1'
 readonly TTL=300
 readonly RECORDS=('dev' 'test' 'uat')
 
+# Make sure any old load balancers were removed
 if [ $(gcloud compute forwarding-rules list --filter "region:($REGION)" | wc -l | awk '{$1=$1};1') -gt 2 ]; then
   echo "More than one load balancer detected. Exiting script."
   exit 1

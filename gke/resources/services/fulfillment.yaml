@@ -36,10 +36,10 @@ spec:
         image: gcr.io/gke-confluent-atlas/storefront-fulfillment:gke-2.2.1
         resources:
           requests:
-            memory: "250Mi"
+            memory: "250M"
             cpu: "100m"
           limits:
-            memory: "500Mi"
+            memory: "400M"
             cpu: "250m"
         env:
         - name: SPRING_PROFILES_ACTIVE
