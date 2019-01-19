@@ -1,7 +1,7 @@
 apiVersion: authentication.istio.io/v1alpha1
 kind: Policy
 metadata:
-  name: ingress-auth-policy
+  name: auth-policy-ingressgateway
   namespace: istio-system
 spec:
   targets:

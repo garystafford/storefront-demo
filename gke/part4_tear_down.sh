@@ -18,5 +18,5 @@ gcloud compute firewall-rules list
 # In case target-pool associated with Cluster is not deleted
 yes | gcloud compute target-pools delete  \
   $(gcloud compute target-pools list \
-      --filter="region:($REGION)" --project $PROJECT \
-      | awk 'NR==2 {print $1}')
+    --filter="region:($REGION)" --project $PROJECT \
+  | awk 'NR==2 {print $1}')

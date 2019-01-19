@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
-  name: confluent-cloud-external-mesh
+  name: external-mesh-confluent-cloud
 spec:
   hosts:
   - pkc-lo894.us-central1.gcp.confluent.cloud
