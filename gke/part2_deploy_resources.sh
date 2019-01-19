@@ -39,9 +39,7 @@ for namespace in ${NAMESPACES[@]}; do
   kubectl apply -n $namespace -f ./resources/services/fulfillment.yaml
   kubectl apply -n $namespace -f ./resources/services/orders.yaml
 
-  kubectl scale --replicas=3 -n $namespace deployment.extensions/accounts
-  kubectl scale --replicas=3 -n $namespace deployment.extensions/fulfillment
-  kubectl scale --replicas=3 -n $namespace deployment.extensions/orders
+  # kubectl scale --replicas=3 -n $namespace deployment.extensions/accounts
+  # kubectl scale --replicas=3 -n $namespace deployment.extensions/fulfillment
+  # kubectl scale --replicas=3 -n $namespace deployment.extensions/orders
 done
-
-kubectl scale --replicas=3 -n dev -f ./resources/services/accounts.yaml
