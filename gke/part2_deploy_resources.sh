@@ -1,6 +1,9 @@
 #!/bin/bash
 #
-# Part 2: Deploy resources
+# author: Gary A. Stafford
+# site: https://programmaticponderings.com
+# license: MIT License
+# purpose: Deploy Kubernetes/Istio resources
 
 # Constants - CHANGE ME!
 readonly CERT_PATH=~/Documents/Articles/gke-kafka/sslforfree_wildcard
