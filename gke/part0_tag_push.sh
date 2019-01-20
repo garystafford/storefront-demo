@@ -1,6 +1,9 @@
 #!/bin/bash
 #
-# Part 0: Push existing Dockerhub images to Google Container Registry (GCR)
+# author: Gary A. Stafford
+# site: https://programmaticponderings.com
+# license: MIT License
+# purpose: Push existing Dockerhub images to Google Container Registry (GCR)
 
 # Constants - CHANGE ME!
 readonly PROJECT='gke-confluent-atlas'
