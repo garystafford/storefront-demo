@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-
-# Create sample data by hitting Storefront sample endpoints
-# Update storefront_api_url and jwt
-
+#
+# author: Gary A. Stafford
+# site: https://programmaticponderings.com
+# license: MIT License
+# purpose: Create sample data by hitting Storefront sample endpoints
+#          Update storefront_api_url and jwt
 # usage: python3 ./refresh.py
 
 import requests
