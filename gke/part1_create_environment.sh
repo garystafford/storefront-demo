@@ -1,6 +1,9 @@
 #!/bin/bash
 #
-# Part 1: Create local Kubernetes cluster on GKE
+# author: Gary A. Stafford
+# site: https://programmaticponderings.com
+# license: MIT License
+# purpose: Create non-prod Kubernetes cluster on GKE with Istio
 
 # Constants - CHANGE ME!
 readonly PROJECT='gke-confluent-atlas'
