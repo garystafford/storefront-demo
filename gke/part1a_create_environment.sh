@@ -1,6 +1,9 @@
 #!/bin/bash
 #
-# Part 1: Create local Kubernetes cluster on GKE
+# author: Gary A. Stafford
+# site: https://programmaticponderings.com
+# license: MIT License
+# purpose: Create non-prod Kubernetes cluster on GKE
 
 # Constants - CHANGE ME!
 readonly PROJECT='gke-confluent-atlas'
@@ -31,8 +34,7 @@ time gcloud beta container \
   --network "projects/${PROJECT}/global/networks/default" \
   --subnetwork "projects/${PROJECT}/regions/${REGION}/subnetworks/default" \
   --default-max-pods-per-node "110" \
-  --addons HorizontalPodAutoscaling,HttpLoadBalancing,Istio \
-  --istio-config auth=MTLS_STRICT \
+  --addons HorizontalPodAutoscaling,HttpLoadBalancing \
   --metadata disable-legacy-endpoints=true \
   --enable-autoupgrade \
   --enable-autorepair

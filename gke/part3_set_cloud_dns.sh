@@ -1,6 +1,9 @@
 #!/bin/bash
 #
-# Part 3: Update Cloud DNS A Records for new GKE cluster
+# author: Gary A. Stafford
+# site: https://programmaticponderings.com
+# license: MIT License
+# purpose: Update Cloud DNS A Records
 
 # Constants - CHANGE ME!
 readonly PROJECT='gke-confluent-atlas'
