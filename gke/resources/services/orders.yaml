@@ -34,6 +34,13 @@ spec:
       containers:
       - name: orders
         image: garystafford/storefront-orders:gke-2.2.0
+        resources:
+          requests:
+            memory: "250M"
+            cpu: "100m"
+          limits:
+            memory: "400M"
+            cpu: "250m"
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "gke"
