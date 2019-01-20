@@ -1,6 +1,9 @@
 #!/bin/bash
 #
-# Part 4: Tear down resources
+# author: Gary A. Stafford
+# site: https://programmaticponderings.com
+# license: MIT License
+# purpose: Tear down GKE cluster and associated resources
 
 # Constants - CHANGE ME!
 readonly PROJECT='gke-confluent-atlas'
