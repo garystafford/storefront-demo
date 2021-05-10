@@ -22,12 +22,12 @@ fi
 
 for repo in "${repos[@]}"
 do
-  cd ${root}/${repo} && \
+  cd "${root}/${repo}" && \
   git add -A && \
   git commit -m "${comment}" && \
   git push && \
   git status
-  echo ${repo}
+  echo "${repo}"
 done
 
 cd ../
