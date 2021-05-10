@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.9'
 
 services:
   # zuul:
@@ -32,42 +32,49 @@ services:
   #   - kafka-net
   #
   mongo:
-    image: mongo:latest
-    command: --smallfiles
-    # expose:
-    # - "27017"
+    image: mongo:4.4.5
     ports:
-    - "27017:27017/tcp"
-    hostname: mongo
+      - target: 27017
+        published: 27017
+        protocol: tcp
+        mode: host
     networks:
-    - kafka-net
+      - kafka-net
 
   mongo_express:
-    image: mongo-express:latest
-    # expose:
-    # - "8081"
+    image: mongo-express:0.54.0
+    depends_on:
+      - mongo
     ports:
-    - "8081:8081/tcp"
-    hostname: mongo_express
+      - target: 8081
+        published: 8081
+        protocol: tcp
+        mode: host
     networks:
-    - kafka-net
+      - kafka-net
 
   zookeeper:
-    image: wurstmeister/zookeeper:latest
+    image: zookeeper:3.7.0
     ports:
-    - "2181:2181/tcp"
-    hostname: zookeeper
+      - target: 2181
+        published: 2181
+        protocol: tcp
+        mode: host
+#    environment:
+#      ZOO_MY_ID: 1
+#      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
     networks:
-    - kafka-net
+      - kafka-net
 
   kafka:
-    image: wurstmeister/kafka:latest
+    image: wurstmeister/kafka:2.13-2.7.0
     depends_on:
-    - zookeeper
-    # expose:
-    # - "9092"
+      - zookeeper
     ports:
-    - "9092:9092/tcp"
+      - target: 9092
+        published: 9092
+        protocol: tcp
+        mode: host
     environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_CREATE_TOPICS: "accounts.customer.change:1:1,fulfillment.order.change:1:1,orders.order.fulfill:1:1"
@@ -75,27 +82,24 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_DELETE_TOPIC_ENABLE: "true"
     volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    hostname: kafka
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
-    - kafka-net
+      - kafka-net
 
   kafka_manager:
-    image: hlebalbau/kafka-manager:latest
+    image: kafkamanager/kafka-manager:3.0.0.4
     ports:
-    - "9000:9000/tcp"
-    # expose:
-    # - "9000"
+      - target: 9000
+        published: 9000
+        protocol: tcp
+        mode: host
     depends_on:
-    - kafka
+      - kafka
     environment:
       ZK_HOSTS: "zookeeper:2181"
       APPLICATION_SECRET: "random-secret"
-    command: -Dpidfile.path=/dev/null
-    hostname: kafka_manager
     networks:
-    - kafka-net
+      - kafka-net
 
 networks:
   kafka-net:
-    driver: overlay

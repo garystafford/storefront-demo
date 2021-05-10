@@ -1,47 +1,50 @@
-version: '3.2'
+version: '3.9'
 
 services:
   accounts:
-    image: garystafford/storefront-accounts:latest
-    # ports:
-    # - "8080:8080/tcp"
+    image: garystafford/storefront-accounts:3.0.0
+    ports:
+      - target: 8080
+        published: 8085
+        protocol: tcp
+        mode: host
     depends_on:
-    - kafka
-    - mongo
-    hostname: accounts
-    # environment:
-    #   LOGGING_LEVEL_ROOT: DEBUG
+      - kafka
+      - mongo
+    environment:
+      LOGGING_LEVEL_ROOT: DEBUG
     networks:
-    - kafka-net
+      - kafka-net
 
   orders:
-    image: garystafford/storefront-orders:latest
-    # ports:
-    # - "8080:8080/tcp"
+    image: garystafford/storefront-orders:3.0.0
+    ports:
+      - target: 8080
+        published: 8090
+        protocol: tcp
+        mode: host
     depends_on:
-    - kafka
-    - mongo
-    - eureka
-    hostname: orders
-    # environment:
-    #   LOGGING_LEVEL_ROOT: DEBUG
+      - kafka
+      - mongo
+    environment:
+      LOGGING_LEVEL_ROOT: DEBUG
     networks:
-    - kafka-net
+      - kafka-net
 
   fulfillment:
-    image: garystafford/storefront-fulfillment:latest
-    # ports:
-    # - "8080:8080/tcp"
+    image: garystafford/storefront-fulfillment:3.0.0
+    ports:
+      - target: 8080
+        published: 8095
+        protocol: tcp
+        mode: host
     depends_on:
-    - kafka
-    - mongo
-    - eureka
-    hostname: fulfillment
-    # environment:
-    #   LOGGING_LEVEL_ROOT: DEBUG
+      - kafka
+      - mongo
+    environment:
+      LOGGING_LEVEL_ROOT: DEBUG
     networks:
-    - kafka-net
+      - kafka-net
 
 networks:
   kafka-net:
-    driver: overlay

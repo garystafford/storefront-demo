@@ -18,6 +18,6 @@ helm install $ISTIO_HOME/install/kubernetes/helm/istio \
   --set prometheus.enable=true \
   --set servicegraph.enable=true \
   --set tracing.enable=true \
-  --set kiali.enable=true
-  # --set telemetry-gateway.grafanaEnabled=true \
-  # --set telemetry-gateway.prometheusEnabled=true \
+  --set kiali.enable=true \
+  --set telemetry-gateway.grafanaEnabled=true \
+  --set telemetry-gateway.prometheusEnabled=true \
