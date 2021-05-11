@@ -49,16 +49,16 @@ def delete_topics():
         print('Kafka topic deleted: ' + topic)
     print('\n')
 
-
+# notes these are zuul urls
 def create_sample_data():
     sample_urls = [
-        'http://localhost:8085/customers/sample',
-        'http://localhost:8090/customers/sample/orders',
-        'http://localhost:8090/customers/sample/fulfill',
-        'http://localhost:8095/fulfillments/sample/process',
-        'http://localhost:8095/fulfillments/sample/ship',
-        'http://localhost:8095/fulfillments/sample/in-transit',
-        'http://localhost:8095/fulfillments/sample/receive'
+        'http://localhost:8080/accounts/customers/sample',
+        'http://localhost:8080/orders/customers/sample/orders',
+        'http://localhost:8080/orders/customers/sample/fulfill',
+        'http://localhost:8080/fulfillment/fulfillments/sample/process',
+        'http://localhost:8080/fulfillment/fulfillments/sample/ship',
+        'http://localhost:8080/fulfillment/fulfillments/sample/in-transit',
+        'http://localhost:8080/fulfillment/fulfillments/sample/receive'
     ]
 
     for sample_url in sample_urls:
