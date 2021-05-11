@@ -20,6 +20,18 @@ pwd
 docker build -f Docker/Dockerfile --no-cache -t garystafford/storefront-fulfillment:3.0.0 .
 docker push garystafford/storefront-fulfillment:3.0.0
 
+cd ../storefront-eureka-server || exit
+pwd
+./gradlew clean build
+docker build -f Docker/Dockerfile --no-cache -t garystafford/storefront-eureka:3.0.0 .
+docker push garystafford/storefront-eureka:3.0.0
+
+cd ../storefront-zuul-proxy || exit
+pwd
+./gradlew clean build
+docker build -f Docker/Dockerfile --no-cache -t garystafford/storefront-zuul:3.0.0 .
+docker push garystafford/storefront-zuul:3.0.0
+
 
 #docker pull garystafford/storefront-fulfillment:3.0.0 \
 #&& docker pull garystafford/storefront-accounts:3.0.0 \
