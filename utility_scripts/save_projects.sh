@@ -20,6 +20,14 @@ cd ../storefront-demo-fulfillment || exit
 pwd
 git add -A && git commit -m"${COMMIT_MESSAGE}" && git push
 
+cd ../storefront-eureka-server || exit
+pwd
+git add -A && git commit -m"${COMMIT_MESSAGE}" && git push
+
+cd ../storefront-zuul-proxy || exit
+pwd
+git add -A && git commit -m"${COMMIT_MESSAGE}" && git push
+
 #docker pull garystafford/storefront-fulfillment:3.0.0 \
 #&& docker pull garystafford/storefront-accounts:3.0.0 \
 #&& docker pull garystafford/storefront-orders:3.0.0 \

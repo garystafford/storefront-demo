@@ -1,36 +1,37 @@
 version: '3.9'
 
 services:
-  # zuul:
-  #   image: garystafford/storefront-zuul:latest
-  #   # expose:
-  #   # - "8080"
-  #   ports:
-  #   - "8080:8080/tcp"
-  #   depends_on:
-  #   - kafka
-  #   - mongo
-  #   - eureka
-  #   hostname: zuul
-  #   environment:
-  #     LOGGING_LEVEL_ROOT: DEBUG
-  #     RIBBON_READTIMEOUT: 3000
-  #     RIBBON_SOCKETTIMEOUT: 3000
-  #     ZUUL_HOST_CONNECT_TIMEOUT_MILLIS: 3000
-  #     ZUUL_HOST_CONNECT_SOCKET_MILLIS: 3000
-  #   networks:
-  #   - kafka-net
-  #
-  # eureka:
-  #   image: garystafford/storefront-eureka:latest
-  #   # expose:
-  #   # - "8761"
-  #   ports:
-  #   - "8761:8761/tcp"
-  #   hostname: eureka
-  #   networks:
-  #   - kafka-net
-  #
+   zuul:
+     image: garystafford/storefront-zuul:3.0.0
+     ports:
+       - target: 8080
+         published: 8080
+         protocol: tcp
+         mode: host
+     depends_on:
+     - kafka
+     - mongo
+     - eureka
+     hostname: zuul
+     environment:
+       LOGGING_LEVEL_ROOT: DEBUG
+       RIBBON_READTIMEOUT: 3000
+       RIBBON_SOCKETTIMEOUT: 3000
+       ZUUL_HOST_CONNECT_TIMEOUT_MILLIS: 3000
+       ZUUL_HOST_CONNECT_SOCKET_MILLIS: 3000
+     networks:
+     - kafka-net
+
+   eureka:
+     image: garystafford/storefront-eureka:3.0.0
+     ports:
+       - target: 8761
+         published: 8761
+         protocol: tcp
+         mode: host
+     networks:
+     - kafka-net
+
   mongo:
     image: mongo:4.4.5
     ports:
