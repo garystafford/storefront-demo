@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   zuul:
-    image: garystafford/storefront-zuul:3.0.0
+    image: garystafford/storefront-zuul:1.0.0 # 3.0.0 failing
     ports:
       - target: 8080
         published: 8080
