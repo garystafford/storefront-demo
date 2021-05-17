@@ -31,8 +31,39 @@ services:
     networks:
       - kafka-net
 
+  prometheus:
+    image: prom/prometheus:v2.27.0
+    ports:
+      - target: 9090
+        published: 9090
+        protocol: tcp
+        mode: host
+    volumes:
+      - ${HOME}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - accounts
+      - orders
+      - fulfillment
+    networks:
+      - kafka-net
+
+  grafana:
+    image: grafana/grafana:7.5.6-ubuntu
+    ports:
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: host
+    volumes:
+      - $HOME/grafana:/var/lib/grafana
+    depends_on:
+      - prometheus
+    user: $ID
+    networks:
+      - kafka-net
+
   mongo:
-    image: mongo:4.4.5
+    image: mongo:4.4.6
     ports:
       - target: 27017
         published: 27017

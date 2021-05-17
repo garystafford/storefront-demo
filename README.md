@@ -20,6 +20,11 @@ In the Docker Compose file, you can choose to uncomment the Kafka and MongoDB po
 Build Docker Swarm and deploy Docker Stack.
 
 ```bash
+mkdir ${HOME}/prometheus
+mkdir $HOME/grafana
+copy prometheus.yml ${HOME}/prometheus
+ID=$(id -u) # saves your user id in the ID variable
+
 docker swarm init
 sh ./stack_deploy_local.sh
 ```
