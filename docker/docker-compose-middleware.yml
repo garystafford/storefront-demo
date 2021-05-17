@@ -118,7 +118,7 @@ services:
       - kafka-net
 
   kafka_manager:
-    image: kafkamanager/kafka-manager:3.0.0.4
+    image: hlebalbau/kafka-manager:3.0.0.5
     ports:
       - target: 9000
         published: 9000
