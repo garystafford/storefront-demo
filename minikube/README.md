@@ -2,38 +2,53 @@
 
 Before deploying to GKE, you should always test your application, as well as your Kubernetes resource files (secrets, deployments, services, namespaces, routerules, etc.) on minikube.
 
-## Deploy v2 to Minikube
+## Deploy to Minikube
 
 ```bash
+# install minikube
+# https://istio.io/latest/docs/setup/install/istioctl/
+brew install minikube
+
 # create cluster
 minikube start
 minikube status
 
-# install Istio 0.7.1 without mTLS
-kubectl apply -f $ISTIO_HOME/install/kubernetes/istio.yaml
-
-# deploy v2 to local minikube dev environment
-sh ./part1-create-environment.sh
-sh ./part2-deploy-v2.sh
-sh ./part3-smoke-test.sh
-
 # kubernetes dashboard
 minikube dashboard
+
+# Install Istio 1.9.4 with Istioctl
+# https://istio.io/latest/docs/setup/install/istioctl/
+istioctl profile list
+istioctl profile dump demo
+yes | istioctl install --set profile=demo
+
+# deploy to local minikube dev environment
+kubectl config current-context
+
+kubectl apply -f ./minikube/resources/namespace.yaml
+kubectl label namespace dev istio-injection=enabled
+
+kubectl apply -f ./minikube/resources/mongodb.yaml -n dev
+kubectl apply -f ./minikube/resources/mongo-express.yaml -n dev
+minikube service --url mongo-express -n dev
+
+kubectl apply -f ./minikube/resources/zookeeper.yaml -n dev
+kubectl apply -f ./minikube/resources/kafka.yaml -n dev
+kubectl apply -f ./minikube/resources/cmak.yaml -n dev
+
+kubectl apply -f ./minikube/resources/accounts.yaml -n dev
+
 ```
 
 ## Misc. Commands
 
 ```bash
 brew cask upgrade minikube
-
 minikube version
-
-minikube get-k8s-versions
-
-eval $(minikube docker-env)
-docker ps
-
+eval $(minikube docker-env) && docker ps
 kubectl config use-context minikube
 kubectl get nodes
 kubectl get namespaces
+kubectl get services -n dev
+kubectl describe node
 ```
