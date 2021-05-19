@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: storefront-gateway
+  name: storefront
 spec:
   selector:
     istio: ingressgateway
@@ -16,7 +16,7 @@ spec:
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: storefront-dev
+  name: storefront
 spec:
   hosts:
     - "*"
@@ -37,6 +37,8 @@ spec:
     - match:
         - uri:
             prefix: /orders
+      rewrite:
+        uri: /
       route:
         - destination:
             port:
@@ -46,6 +48,8 @@ spec:
     - match:
         - uri:
             prefix: /fulfillment
+      rewrite:
+        uri: /
       route:
         - destination:
             port:

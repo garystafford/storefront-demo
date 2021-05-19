@@ -6,7 +6,7 @@
 brew install minikube
 
 # create cluster
-minikube start --cpus 2 --memory 3072
+minikube --cpus 2 --memory 3g start
 minikube status
 
 # deploy to local minikube dev environment
@@ -23,6 +23,9 @@ istioctl profile dump demo
 #yes | istioctl install --set profile=demo
 istioctl install --set profile=default -y
 
+# new tab
+# kubernetes dashboard
+minikube dashboard
 
 # new tab
 minikube tunnel
@@ -49,10 +52,11 @@ kubectl apply -f ./minikube/resources/istio-gateway.yaml -n dev #istio-system
 # prometheus required by kiali
 kubectl apply -f $ISTIO_HOME/samples/addons/prometheus.yaml
 kubectl apply -f $ISTIO_HOME/samples/addons/kiali.yaml
-istioctl dashboard kiali
 
-# kubernetes dashboard
-minikube dashboard
+kubectl get svc istio-ingressgateway -n istio-system
+
+# new tab
+istioctl dashboard kiali
 ```
 
 ## Misc. Commands
