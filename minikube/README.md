@@ -39,12 +39,15 @@ kubectl apply -f ./minikube/resources/cmak.yaml -n dev
 # minikube service --url cmak -n dev
 
 kubectl apply -f ./minikube/resources/accounts.yaml -n dev
+kubectl apply -f ./minikube/resources/orders.yaml -n dev
+kubectl apply -f ./minikube/resources/fulfillment.yaml -n dev
 
 kubectl apply -f ./minikube/resources/destination_rules.yaml -n dev
 kubectl apply -f ./minikube/resources/istio-gateway.yaml -n dev #istio-system
 
-kubectl apply -f $ISTIO_HOME/samples/addons/kiali.yaml
+# prometheus required by kiali
 kubectl apply -f $ISTIO_HOME/samples/addons/prometheus.yaml
+kubectl apply -f $ISTIO_HOME/samples/addons/kiali.yaml
 istioctl dashboard kiali
 
 # kubernetes dashboard
