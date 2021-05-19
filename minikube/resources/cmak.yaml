@@ -6,8 +6,8 @@ metadata:
     app: cmak
 spec:
   ports:
-  - name: http
-    port: 9000
+    - name: http
+      port: 9000
   selector:
     app: cmak
   type: NodePort
@@ -33,13 +33,13 @@ spec:
         sidecar.istio.io/inject: "false"
     spec:
       containers:
-      - name: cmak
-        image: hlebalbau/kafka-manager:3.0.0.5
-        ports:
-        - containerPort: 9000
-        imagePullPolicy: IfNotPresent
-        env:
-          - name: ZK_HOSTS
-            value: "zookeeper.dev:2181"
-          - name: APPLICATION_SECRET
-            value: "random-secret"
+        - name: cmak
+          image: hlebalbau/kafka-manager:3.0.0.5
+          ports:
+            - containerPort: 9000
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ZK_HOSTS
+              value: "zookeeper.dev:2181"
+            - name: APPLICATION_SECRET
+              value: "random-secret"

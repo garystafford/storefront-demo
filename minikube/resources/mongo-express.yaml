@@ -6,8 +6,8 @@ metadata:
     app: mongo-express
 spec:
   ports:
-  - name: http
-    port: 8081
+    - name: http
+      port: 8081
   selector:
     app: mongo-express
   type: NodePort
@@ -33,8 +33,8 @@ spec:
         sidecar.istio.io/inject: "false"
     spec:
       containers:
-      - name: mongo-express
-        image: mongo-express:0.54.0
-        ports:
-        - containerPort: 8081
-        imagePullPolicy: IfNotPresent
+        - name: mongo-express
+          image: mongo-express:0.54.0
+          ports:
+            - containerPort: 8081
+          imagePullPolicy: IfNotPresent

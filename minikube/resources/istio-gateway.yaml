@@ -34,21 +34,21 @@ spec:
               number: 8080
             subset: v3
             host: accounts.dev.svc.cluster.local
-#    - match:
-#        - uri:
-#            prefix: /orders
-#      route:
-#        - destination:
-#            port:
-#              number: 8080
-#            subset: v3
-#            host: orders.dev.svc.cluster.local
-#    - match:
-#        - uri:
-#            prefix: /fulfillment
-#      route:
-#        - destination:
-#            port:
-#              number: 8080
-#            subset: v3
-#            host: fulfillment.dev.svc.cluster.local
+    - match:
+        - uri:
+            prefix: /orders
+      route:
+        - destination:
+            port:
+              number: 8080
+            subset: v3
+            host: orders.dev.svc.cluster.local
+    - match:
+        - uri:
+            prefix: /fulfillment
+      route:
+        - destination:
+            port:
+              number: 8080
+            subset: v3
+            host: fulfillment.dev.svc.cluster.local

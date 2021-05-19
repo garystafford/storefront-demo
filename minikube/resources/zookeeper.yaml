@@ -6,8 +6,8 @@ metadata:
     app: zookeeper
 spec:
   ports:
-  - name: http
-    port: 2181
+    - name: http
+      port: 2181
   selector:
     app: zookeeper
 ---
@@ -32,8 +32,8 @@ spec:
         sidecar.istio.io/inject: "false"
     spec:
       containers:
-      - name: zookeeper
-        image: zookeeper:3.7.0
-        ports:
-        - containerPort: 2181
-        imagePullPolicy: IfNotPresent
+        - name: zookeeper
+          image: zookeeper:3.7.0
+          ports:
+            - containerPort: 2181
+          imagePullPolicy: IfNotPresent

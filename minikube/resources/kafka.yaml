@@ -6,8 +6,8 @@ metadata:
     app: kafka-cluster
 spec:
   ports:
-  - name: http
-    port: 9092
+    - name: http
+      port: 9092
   selector:
     app: kafka-cluster
 ---
@@ -32,21 +32,21 @@ spec:
         sidecar.istio.io/inject: "false"
     spec:
       containers:
-      - name: kafka-cluster
-        image: wurstmeister/kafka:2.13-2.7.0
-        ports:
-        - containerPort: 9092
-        imagePullPolicy: IfNotPresent
-        env:
-          - name: KAFKA_PORT
-            value: !!integer "9092"
-          - name: KAFKA_ADVERTISED_HOST_NAME
-            value: "kafka-cluster"
-          - name: KAFKA_CREATE_TOPICS
-            value: "accounts.customer.change:1:1,fulfillment.order.change:1:1,orders.order.fulfill:1:1"
-          - name: KAFKA_ADVERTISED_PORT
-            value: !!integer "9092"
-          - name: KAFKA_ZOOKEEPER_CONNECT
-            value: "zookeeper.dev:2181"
-          - name: KAFKA_DELETE_TOPIC_ENABLE
-            value: "true"
+        - name: kafka-cluster
+          image: wurstmeister/kafka:2.13-2.7.0
+          ports:
+            - containerPort: 9092
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_PORT
+              value: !!integer "9092"
+            - name: KAFKA_ADVERTISED_HOST_NAME
+              value: "kafka-cluster"
+            - name: KAFKA_CREATE_TOPICS
+              value: "accounts.customer.change:1:1,fulfillment.order.change:1:1,orders.order.fulfill:1:1"
+            - name: KAFKA_ADVERTISED_PORT
+              value: !!integer "9092"
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              value: "zookeeper.dev:2181"
+            - name: KAFKA_DELETE_TOPIC_ENABLE
+              value: "true"

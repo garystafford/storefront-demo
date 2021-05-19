@@ -6,8 +6,8 @@ metadata:
     app: mongo
 spec:
   ports:
-  - name: http
-    port: 27017
+    - name: http
+      port: 27017
   selector:
     app: mongo
 ---
@@ -32,8 +32,8 @@ spec:
         sidecar.istio.io/inject: "false"
     spec:
       containers:
-      - name: mongo
-        image: mongo:4.4.6
-        ports:
-        - containerPort: 27017
-        imagePullPolicy: IfNotPresent
+        - name: mongo
+          image: mongo:4.4.6
+          ports:
+            - containerPort: 27017
+          imagePullPolicy: IfNotPresent
