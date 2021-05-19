@@ -31,11 +31,11 @@ kubectl label namespace dev istio-injection=enabled
 
 kubectl apply -f ./minikube/resources/mongodb.yaml -n dev
 kubectl apply -f ./minikube/resources/mongo-express.yaml -n dev
-# minikube service --url mongo-express -n dev
-
 kubectl apply -f ./minikube/resources/zookeeper.yaml -n dev
 kubectl apply -f ./minikube/resources/kafka.yaml -n dev
 kubectl apply -f ./minikube/resources/cmak.yaml -n dev
+
+# minikube service --url mongo-express -n dev
 # minikube service --url cmak -n dev
 
 kubectl apply -f ./minikube/resources/accounts.yaml -n dev
@@ -49,7 +49,6 @@ istioctl dashboard kiali
 
 # kubernetes dashboard
 minikube dashboard
-
 ```
 
 ## Misc. Commands
