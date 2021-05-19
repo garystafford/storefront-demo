@@ -1,7 +1,3 @@
-# Minikube
-
-Before deploying to GKE, you should always test your application, as well as your Kubernetes resource files (secrets, deployments, services, namespaces, routerules, etc.) on minikube.
-
 ## Deploy to Minikube
 
 ```bash
@@ -10,8 +6,13 @@ Before deploying to GKE, you should always test your application, as well as you
 brew install minikube
 
 # create cluster
-minikube start
+minikube start --cpus 2 --memory 3072
 minikube status
+
+# deploy to local minikube dev environment
+kubectl config current-context
+
+eval $(minikube docker-env) && docker ps
 
 # Install Istio 1.9.4 with Istioctl
 # https://istio.io/latest/docs/setup/install/istioctl/
@@ -20,8 +21,6 @@ istioctl profile dump demo
 #yes | istioctl install --set profile=demo
 istioctl install --set profile=default -y
 
-# deploy to local minikube dev environment
-kubectl config current-context
 
 # new tab
 minikube tunnel
@@ -66,3 +65,8 @@ kubectl get namespaces
 kubectl get services -n dev
 kubectl describe node
 ```
+
+## Reference
+
+- <https://minikube.sigs.k8s.io/docs/handbook/accessing/>
+
