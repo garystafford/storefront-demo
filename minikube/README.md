@@ -15,6 +15,8 @@ kubectl config current-context
 eval $(minikube docker-env) && docker ps
 
 # Install Istio 1.9.4 with Istioctl
+echo $ISTIO_HOME # /Applications/Istio/istio-1.9.4
+
 # https://istio.io/latest/docs/setup/install/istioctl/
 istioctl profile list
 istioctl profile dump demo
