@@ -1,0 +1,32 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: accounts
+spec:
+  host: accounts.dev.svc.cluster.local
+  subsets:
+    - name: v3
+      labels:
+        version: 3.0.0
+#---
+#apiVersion: networking.istio.io/v1beta1
+#kind: DestinationRule
+#metadata:
+#  name: orders
+#spec:
+#  host: orders.dev.svc.cluster.local
+#  subsets:
+#    - name: v3
+#      labels:
+#        version: 3.0.0
+#---
+#apiVersion: networking.istio.io/v1beta1
+#kind: DestinationRule
+#metadata:
+#  name: fulfillment
+#spec:
+#  host: fulfillment.dev.svc.cluster.local
+#  subsets:
+#    - name: v3
+#      labels:
+#        version: 3.0.0

@@ -5,9 +5,12 @@ metadata:
   labels:
     app: accounts
 spec:
+  type: ClusterIP
   ports:
-  - name: http
-    port: 8080
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
   selector:
     app: accounts
 ---
@@ -28,12 +31,11 @@ spec:
     metadata:
       labels:
         app: accounts
-#      annotations:
-#        sidecar.istio.io/inject: "true"
+        version: 3.0.0
     spec:
       containers:
       - name: accounts
-        image: garystafford/storefront-accounts:3.0.0
+        image: docker.io/garystafford/storefront-accounts:3.0.0-minikube
 #        resources:
 #          requests:
 #            memory: "250M"

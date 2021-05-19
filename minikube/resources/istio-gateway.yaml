@@ -1,4 +1,4 @@
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
   name: storefront-gateway
@@ -6,120 +6,49 @@ spec:
   selector:
     istio: ingressgateway
   servers:
-  - port:
-      number: 443
-      name: https
-      protocol: HTTPS
-    tls:
-      mode: SIMPLE
-      serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
-      privateKey: /etc/istio/ingressgateway-certs/tls.key
-    hosts:
-    - dev.api.storefront-demo.com
-    - test.api.storefront-demo.com
-    - uat.api.storefront-demo.com
+    - port:
+        number: 8080
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: storefront-dev
 spec:
   hosts:
-  - dev.api.storefront-demo.com
+    - "*"
   gateways:
-  - storefront-gateway
+    - storefront-gateway
   http:
-  - match:
-    - uri:
-        prefix: /accounts
-    route:
-    - destination:
-        port:
-          number: 8080
-        host: accounts.dev.svc.cluster.local
-  - match:
-    - uri:
-        prefix: /fulfillment
-    route:
-    - destination:
-        port:
-          number: 8080
-        host: fulfillment.dev.svc.cluster.local
-  - match:
-    - uri:
-        prefix: /orders
-    route:
-    - destination:
-        port:
-          number: 8080
-        host: orders.dev.svc.cluster.local
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: storefront-test
-spec:
-  hosts:
-  - test.api.storefront-demo.com
-  gateways:
-  - storefront-gateway
-  http:
-  - match:
-    - uri:
-        prefix: /accounts
-    route:
-    - destination:
-        port:
-          number: 8080
-        host: accounts.test.svc.cluster.local
-  - match:
-    - uri:
-        prefix: /fulfillment
-    route:
-    - destination:
-        port:
-          number: 8080
-        host: fulfillment.test.svc.cluster.local
-  - match:
-    - uri:
-        prefix: /orders
-    route:
-    - destination:
-        port:
-          number: 8080
-        host: orders.test.svc.cluster.local
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: storefront-uat
-spec:
-  hosts:
-  - uat.api.storefront-demo.com
-  gateways:
-  - storefront-gateway
-  http:
-  - match:
-    - uri:
-        prefix: /accounts
-    route:
-    - destination:
-        port:
-          number: 8080
-        host: accounts.uat.svc.cluster.local
-  - match:
-    - uri:
-        prefix: /fulfillment
-    route:
-    - destination:
-        port:
-          number: 8080
-        host: fulfillment.uat.svc.cluster.local
-  - match:
-    - uri:
-        prefix: /orders
-    route:
-    - destination:
-        port:
-          number: 8080
-        host: orders.uat.svc.cluster.local
+    - match:
+        - uri:
+            prefix: /accounts
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            port:
+              number: 8080
+            subset: v3
+            host: accounts.dev.svc.cluster.local
+#    - match:
+#        - uri:
+#            prefix: /orders
+#      route:
+#        - destination:
+#            port:
+#              number: 8080
+#            subset: v3
+#            host: orders.dev.svc.cluster.local
+#    - match:
+#        - uri:
+#            prefix: /fulfillment
+#      route:
+#        - destination:
+#            port:
+#              number: 8080
+#            subset: v3
+#            host: fulfillment.dev.svc.cluster.local
