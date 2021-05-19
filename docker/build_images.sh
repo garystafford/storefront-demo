@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Usage (from root of project): sh ./Docker/build_images.sh
+# Usage (from root of project): sh ./docker/build_images.sh
 
 IMAGE_TAG=3.0.0
 IMAGE_TAG_MINIKUBE=3.0.0-minikube
