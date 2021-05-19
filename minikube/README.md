@@ -33,17 +33,27 @@ minikube tunnel
 kubectl apply -f ./minikube/resources/namespace.yaml
 kubectl label namespace dev istio-injection=enabled
 
-kubectl apply -f ./minikube/resources/mongodb.yaml -n dev
-kubectl apply -f ./minikube/resources/mongo-express.yaml -n dev
 kubectl apply -f ./minikube/resources/zookeeper.yaml -n dev
+# wait until running
+sleep 120
+kubectl apply -f ./minikube/resources/mongodb.yaml -n dev
 kubectl apply -f ./minikube/resources/kafka.yaml -n dev
+# wait until running
+sleep 120
 kubectl apply -f ./minikube/resources/cmak.yaml -n dev
+kubectl apply -f ./minikube/resources/mongo-express.yaml -n dev
 
 # minikube service --url mongo-express -n dev
 # minikube service --url cmak -n dev
 
+# wait until running
+sleep 120
 kubectl apply -f ./minikube/resources/accounts.yaml -n dev
+# wait to reduce minikube load
+sleep 30
 kubectl apply -f ./minikube/resources/orders.yaml -n dev
+# wait to reduce minikube load
+sleep 60
 kubectl apply -f ./minikube/resources/fulfillment.yaml -n dev
 
 kubectl apply -f ./minikube/resources/destination_rules.yaml -n dev
@@ -70,6 +80,20 @@ kubectl get nodes
 kubectl get namespaces
 kubectl get services -n dev
 kubectl describe node
+```
+
+## Alternate Kafka
+
+```text
+kubectl delete -f ./minikube/resources/kafka.yaml -n dev
+kubectl delete -f ./minikube/resources/zookeeper.yaml -n dev
+
+# https://github.com/Yolean/kubernetes-kafka
+kubectl apply -f 00-namespace.yml
+kubectl apply -f rbac-namespace-default
+kubectl apply -f zookeeper
+kubectl apply -f kafka
+
 ```
 
 ## Reference

@@ -39,3 +39,8 @@ spec:
           ports:
             - containerPort: 8080
           imagePullPolicy: IfNotPresent
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "minikube"
+            - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
+              value: "bootstrap.kafka.svc.cluster.local:9092"

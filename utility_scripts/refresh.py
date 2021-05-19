@@ -11,18 +11,17 @@ from pymongo import MongoClient
 import requests
 import time
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://127.0.0.1:27017/')
 
 
 def main():
-    delete_databases()
-    delete_topics()
-
+    # delete_databases()
+    # delete_topics()
     create_sample_data()
 
-    get_mongo_doc('accounts', 'customer.accounts')
-    get_mongo_doc('orders', 'customer.orders')
-    get_mongo_doc('fulfillment', 'fulfillment.requests')
+    # get_mongo_doc('accounts', 'customer.accounts')
+    # get_mongo_doc('orders', 'customer.orders')
+    # get_mongo_doc('fulfillment', 'fulfillment.requests')
 
 
 def delete_databases():
@@ -43,7 +42,7 @@ def delete_topics():
               'orders.order.fulfill',
               'fulfillment.order.change']
     for topic in topics:
-        kafka_manager_url = 'http://localhost:9000/clusters/dev/topics/delete?t=' + topic
+        kafka_manager_url = 'http://127.0.0.1:9000/clusters/dev/topics/delete?t=' + topic
         r = requests.post(kafka_manager_url, data={'topic': topic})
         time.sleep(3)
         print('Kafka topic deleted: ' + topic)
@@ -52,13 +51,13 @@ def delete_topics():
 # notes these are zuul urls
 def create_sample_data():
     sample_urls = [
-        'http://localhost:8080/accounts/customers/sample',
-        'http://localhost:8080/orders/customers/sample/orders',
-        'http://localhost:8080/orders/customers/sample/fulfill',
-        'http://localhost:8080/fulfillment/fulfillments/sample/process',
-        'http://localhost:8080/fulfillment/fulfillments/sample/ship',
-        'http://localhost:8080/fulfillment/fulfillments/sample/in-transit',
-        'http://localhost:8080/fulfillment/fulfillments/sample/receive'
+        'http://127.0.0.1/accounts/customers/sample',
+        'http://127.0.0.1/orders/customers/sample/orders',
+        'http://127.0.0.1/orders/customers/sample/fulfill',
+        'http://127.0.0.1/fulfillment/fulfillments/sample/process',
+        'http://127.0.0.1/fulfillment/fulfillments/sample/ship',
+        'http://127.0.0.1/fulfillment/fulfillments/sample/in-transit',
+        'http://127.0.0.1/fulfillment/fulfillments/sample/receive'
     ]
 
     for sample_url in sample_urls:

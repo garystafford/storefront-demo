@@ -4,7 +4,7 @@
 
 COMMIT_MESSAGE="Updating for 2021.05 release"
 
-cd /Users/garystafford/Documents/projects/storefront-kafka-docker || exit
+cd /Users/garystafford/Documents/projects/storefront-demo || exit
 pwd
 git add -A && git commit -m"${COMMIT_MESSAGE}" && git push
 
