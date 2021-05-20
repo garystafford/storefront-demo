@@ -43,4 +43,6 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: "minikube"
             - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
-              value: "$(KAFKA_SERVICE_HOST):$(KAFKA_SERVICE_PORT)"
+              value: "kafka-cluster-kafka-0.storefront-kafka-project.svc.cluster.local:9094"
+            - name: SPRING_DATA_MONGODB_URI
+              value: mongodb://mongo.dev.svc.cluster.local:27017/fulfillment

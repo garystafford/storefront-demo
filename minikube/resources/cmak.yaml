@@ -40,6 +40,6 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: ZK_HOSTS
-              value: "$(ZOOKEEPER_SERVICE_HOST):$(ZOOKEEPER_SERVICE_PORT)"
-            - name: APPLICATION_SECRET
-              value: "random-secret"
+              value: "zoo-entrance.storefront-kafka-project.svc:2181"
+            # - name: APPLICATION_SECRET
+            #   value: "random-secret"
