@@ -38,3 +38,8 @@ spec:
           ports:
             - containerPort: 8081
           imagePullPolicy: IfNotPresent
+          env:
+            - name: ME_CONFIG_MONGODB_PORT
+              value: !!integer "27017"
+            - name: ME_CONFIG_MONGODB_SERVER
+              value: "mongo.mongo"

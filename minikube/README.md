@@ -30,20 +30,21 @@ minikube dashboard
 # new tab
 minikube tunnel
 
-kubectl apply -f ./minikube/resources/namespace.yaml
+kubectl apply -f ./minikube/resources/namespaces.yaml
 kubectl label namespace dev istio-injection=enabled
 
-kubectl apply -f ./minikube/resources/mongodb.yaml -n dev
-kubectl apply -f ./minikube/resources/mongo-express.yaml -n dev
+kubectl apply -f ./minikube/resources/mongodb.yaml -n mongo
+sleep 60
+kubectl apply -f ./minikube/resources/mongo-express.yaml -n mongo
 # new tab
-minikube service --url mongo-express -n dev
+minikube service --url mongo-express -n mongo
 
 # install Strimzi Kafka (see below)
 # install Zoo Entrance (see below)
 
-kubectl apply -f ./minikube/resources/cmak.yaml -n dev
+kubectl apply -f ./minikube/resources/cmak.yaml -n storefront-kafka-project
 # new tab
-minikube service --url cmak -n dev
+minikube service --url cmak -n storefront-kafka-project
 
 # wait until running
 kubectl apply -f ./minikube/resources/accounts.yaml -n dev
@@ -95,9 +96,7 @@ kubectl apply -f kafka
 ```shell
 # https://strimzi.io/docs/operators/latest/quickstart.html
 # https://github.com/strimzi/strimzi-kafka-operator/releases/download/0.23.0/strimzi-0.23.0.zip
-kubectl create ns kafka
 sed -i '' 's/namespace: .*/namespace: kafka/' install/cluster-operator/*RoleBinding*.yaml
-kubectl create ns storefront-kafka-project
 nano install/cluster-operator/060-Deployment-strimzi-cluster-operator.yaml
 #   env:
 #     - name: STRIMZI_NAMESPACE
@@ -105,10 +104,10 @@ nano install/cluster-operator/060-Deployment-strimzi-cluster-operator.yaml
 kubectl create -f install/cluster-operator/ -n kafka
 kubectl create -f install/cluster-operator/020-RoleBinding-strimzi-cluster-operator.yaml -n storefront-kafka-project
 kubectl create -f install/cluster-operator/032-RoleBinding-strimzi-cluster-operator-topic-operator-delegation.yaml -n storefront-kafka-project
-kubectl create -f install/cluster-operator/031-RoleBinding-strimzi-cluster-operator-entity-operator-delegation.yaml -n storefront-kafka-project
-# run cat << EOF | kubectl create -n storefront-kafka-project -f -... command (see strimzi.txt)
+kubectl create -f install/cluster-operator/031-RoleBinding-strimzi-cluster-operator-entity-operator-delegation.yaml -n storefront-kafka-project 
+kubectl apply -f ../storefront-demo/minikube/resources/strimzi-kafka-cluster.yaml -n storefront-kafka-project
 kubectl wait kafka/kafka-cluster --for=condition=Ready --timeout=300s -n storefront-kafka-project
-# run three topic commands (see strimzi.txt)
+kubectl apply -f ../storefront-demo/minikube/resources/strimzi-kafka-topics.yaml -n storefront-kafka-project
 ```
 
 ## Zoo Entrance

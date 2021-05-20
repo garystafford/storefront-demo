@@ -1,0 +1,29 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: accounts.customer.change
+  labels:
+    strimzi.io/cluster: "kafka-cluster"
+spec:
+  partitions: 3
+  replicas: 1
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: fulfillment.order.change
+  labels:
+    strimzi.io/cluster: "kafka-cluster"
+spec:
+  partitions: 3
+  replicas: 1
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: orders.order.fulfill
+  labels:
+    strimzi.io/cluster: "kafka-cluster"
+spec:
+  partitions: 3
+  replicas: 1

@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+  labels:
+    name: dev
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mongo
+  labels:
+    name: mongo
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kafka
+  labels:
+    name: kafka
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: storefront-kafka-project
+  labels:
+    name: storefront-kafka-project

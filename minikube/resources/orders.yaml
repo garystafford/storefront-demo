@@ -45,4 +45,4 @@ spec:
             - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
               value: "kafka-cluster-kafka-0.storefront-kafka-project.svc.cluster.local:9094"
             - name: SPRING_DATA_MONGODB_URI
-              value: mongodb://mongo.dev.svc.cluster.local:27017/orders
+              value: mongodb://mongo.mongo.svc.cluster.local:27017/orders
