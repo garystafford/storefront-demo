@@ -1,5 +1,7 @@
 # Deploy to Minikube
 
+Assume Istio is downloaded and $`ISTIO_HOME` is added to `$PATH`.
+
 ```bash
 # install minikube
 brew install minikube
@@ -34,14 +36,14 @@ kubectl label namespace dev istio-injection=enabled
 kubectl apply -f ./minikube/resources/mongodb.yaml -n dev
 kubectl apply -f ./minikube/resources/mongo-express.yaml -n dev
 # new tab
-# minikube service --url mongo-express -n dev
+minikube service --url mongo-express -n dev
 
-# install Strimzi (see below)
+# install Strimzi Kafka (see below)
 # install Zoo Entrance (see below)
 
 kubectl apply -f ./minikube/resources/cmak.yaml -n dev
 # new tab
-# minikube service --url cmak -n dev
+minikube service --url cmak -n dev
 
 # wait until running
 kubectl apply -f ./minikube/resources/accounts.yaml -n dev
@@ -66,15 +68,13 @@ istioctl dashboard kiali
 ```bash
 brew cask upgrade minikube
 minikube version
-eval $(minikube docker-env) && docker ps
-kubectl config use-context minikube
 kubectl get nodes
+kubectl describe node
 kubectl get namespaces
 kubectl get services -n dev
-kubectl describe node
 ```
 
-## Yolean/kubernetes-kafka
+## Yolean/kubernetes-kafka (not used)
 
 ```text
 kubectl delete -f ./minikube/resources/kafka.yaml -n dev
@@ -99,23 +99,21 @@ kubectl create ns kafka
 sed -i '' 's/namespace: .*/namespace: kafka/' install/cluster-operator/*RoleBinding*.yaml
 kubectl create ns storefront-kafka-project
 nano install/cluster-operator/060-Deployment-strimzi-cluster-operator.yaml
-        #   env:
-        #     - name: STRIMZI_NAMESPACE
-        #       value: storefront-kafka-project
+#   env:
+#     - name: STRIMZI_NAMESPACE
+#       value: storefront-kafka-project
 kubectl create -f install/cluster-operator/ -n kafka
 kubectl create -f install/cluster-operator/020-RoleBinding-strimzi-cluster-operator.yaml -n storefront-kafka-project
 kubectl create -f install/cluster-operator/032-RoleBinding-strimzi-cluster-operator-topic-operator-delegation.yaml -n storefront-kafka-project
 kubectl create -f install/cluster-operator/031-RoleBinding-strimzi-cluster-operator-entity-operator-delegation.yaml -n storefront-kafka-project
-# run cat << EOF | kubectl create -n storefront-kafka-project -f -... command
+# run cat << EOF | kubectl create -n storefront-kafka-project -f -... command (see strimzi.txt)
 kubectl wait kafka/kafka-cluster --for=condition=Ready --timeout=300s -n storefront-kafka-project
-# run three topic commands
-kubectl get service kafka-cluster-kafka-external-bootstrap -n storefront-kafka-project -o=jsonpath='{.spec.ports[0].nodePort}{"\n"}'
-# 31542
-kubectl get nodes --output=jsonpath='{range .items[*]}{.status.addresses[?(@.type=="InternalIP")].address}{"\n"}{end}'
-192.168.49.2
+# run three topic commands (see strimzi.txt)
 ```
 
 ## Zoo Entrance
+
+You can't access Strimzi's Zookeeper from CMAK directly (this is intentional). Use Zoo Entrance as a proxy for CMAK to Zookeeper.
 
 ```shell
 # https://github.com/strimzi/strimzi-kafka-operator/issues/1337
@@ -128,4 +126,3 @@ kubectl apply -f deploy.yaml -n storefront-kafka-project
 ## Reference
 
 - <https://minikube.sigs.k8s.io/docs/handbook/accessing/>
-
