@@ -23,7 +23,6 @@ istioctl profile list
 istioctl install --set profile=default -y
 
 # new tab
-# kubernetes dashboard
 minikube dashboard
 
 # new tab
@@ -32,17 +31,16 @@ minikube tunnel
 kubectl apply -f ./minikube/resources/namespace.yaml
 kubectl label namespace dev istio-injection=enabled
 
-kubectl apply -f ./minikube/resources/zookeeper.yaml -n dev
 kubectl apply -f ./minikube/resources/mongodb.yaml -n dev
-# wait until running
-sleep 120
-kubectl apply -f ./minikube/resources/kafka.yaml -n dev
-# wait until running
-sleep 180
-kubectl apply -f ./minikube/resources/cmak.yaml -n dev
 kubectl apply -f ./minikube/resources/mongo-express.yaml -n dev
-
+# new tab
 # minikube service --url mongo-express -n dev
+
+# install Strimzi (see below)
+# install Zoo Entrance (see below)
+
+kubectl apply -f ./minikube/resources/cmak.yaml -n dev
+# new tab
 # minikube service --url cmak -n dev
 
 # wait until running
@@ -51,14 +49,13 @@ kubectl apply -f ./minikube/resources/orders.yaml -n dev
 kubectl apply -f ./minikube/resources/fulfillment.yaml -n dev
 
 kubectl apply -f ./minikube/resources/destination_rules.yaml -n dev
-kubectl apply -f ./minikube/resources/istio-gateway.yaml -n dev #istio-system
+kubectl apply -f ./minikube/resources/istio-gateway.yaml -n dev
 
 kubectl get svc istio-ingressgateway -n istio-system
 
 # prometheus required by kiali
 kubectl apply -f $ISTIO_HOME/samples/addons/prometheus.yaml
 kubectl apply -f $ISTIO_HOME/samples/addons/kiali.yaml
-
 
 # new tab
 istioctl dashboard kiali
@@ -118,7 +115,7 @@ kubectl get nodes --output=jsonpath='{range .items[*]}{.status.addresses[?(@.typ
 192.168.49.2
 ```
 
-## Zoo Entrence
+## Zoo Entrance
 
 ```shell
 # https://github.com/strimzi/strimzi-kafka-operator/issues/1337
