@@ -66,7 +66,6 @@ kubectl apply -f $ISTIO_HOME/samples/addons/kiali.yaml
 istioctl dashboard kiali
 istioctl dashboard prometheus
 istioctl dashboard grafana
-
 ```
 
 ## Misc. Commands
