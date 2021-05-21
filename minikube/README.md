@@ -58,7 +58,9 @@ kubectl apply -f ./minikube/resources/destination_rules.yaml -n dev
 kubectl apply -f ./minikube/resources/istio-gateway.yaml -n dev
 
 # prometheus required by kiali
-kubectl apply -f $ISTIO_HOME/samples/addons/prometheus.yaml
+# kubectl apply -f $ISTIO_HOME/samples/addons/prometheus.yaml
+https://istio.io/latest/docs/ops/integrations/prometheus/
+kubectl apply -f ./minikube/resources/prometheus.yaml
 kubectl apply -f $ISTIO_HOME/samples/addons/grafana.yaml
 kubectl apply -f $ISTIO_HOME/samples/addons/kiali.yaml
 
