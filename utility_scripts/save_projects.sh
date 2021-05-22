@@ -20,10 +20,10 @@ cd ../storefront-demo-fulfillment || exit
 pwd
 git add -A && git commit -m"${COMMIT_MESSAGE}" && git push
 
-cd ../storefront-eureka-server || exit
-pwd
-git add -A && git commit -m"${COMMIT_MESSAGE}" && git push
+# cd ../storefront-eureka-server || exit
+# pwd
+# git add -A && git commit -m"${COMMIT_MESSAGE}" && git push
 
-cd ../storefront-zuul-proxy || exit
-pwd
-git add -A && git commit -m"${COMMIT_MESSAGE}" && git push
+# cd ../storefront-zuul-proxy || exit
+# pwd
+# git add -A && git commit -m"${COMMIT_MESSAGE}" && git push

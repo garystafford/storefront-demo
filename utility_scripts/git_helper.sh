@@ -10,9 +10,7 @@ repos=(
   storefront-demo-accounts
   storefront-demo-orders
   storefront-demo-fulfillment
-  storefront-eureka-server
-  storefront-zuul-proxy
-  storefront-kafka-docker
+  storefront-demo
 )
 if [ -n "${args[0]}" ]; then
     comment=${args[0]}
