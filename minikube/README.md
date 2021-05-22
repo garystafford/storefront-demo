@@ -3,11 +3,12 @@
 Assume Istio is downloaded and $`ISTIO_HOME` is added to `$PATH`.
 
 ```bash
-# install minikube
+# install minikube and kubectl
 brew install minikube
+brew install kubectl
 
 # create cluster
-minikube --cpus 3 --memory 4g start
+minikube --cpus 3 --memory 5g --driver=docker start
 minikube status
 
 # deploy to local minikube dev environment
@@ -81,22 +82,6 @@ kubectl get namespaces
 kubectl get services -n dev
 ```
 
-## Yolean/kubernetes-kafka (not used)
-
-```text
-kubectl delete -f ./minikube/resources/kafka.yaml -n dev
-kubectl delete -f ./minikube/resources/zookeeper.yaml -n dev
-
-# https://github.com/Yolean/kubernetes-kafka
-git clone https://github.com/Yolean/kubernetes-kafka.git && cd kubernetes-kafka
-kubectl apply -f 00-namespace.yml
-kubectl apply -k github.com/Yolean/kubernetes-kafka/variants/dev-small/?ref=v6.0.3
-
-kubectl apply -f rbac-namespace-default
-kubectl apply -f zookeeper
-kubectl apply -f kafka
-```
-
 ## Strimzi Quick Start guide (0.23.0)
 
 ```shell
@@ -117,7 +102,7 @@ kubectl wait kafka/kafka-cluster --for=condition=Ready --timeout=300s -n storefr
 kubectl apply -f ../storefront-demo/minikube/resources/strimzi-kafka-topics.yaml -n storefront-kafka-project
 ```
 
-## Zoo Entrance
+## Install Zoo Entrance
 
 You can't access Strimzi's Zookeeper from CMAK directly (this is intentional). Use Zoo Entrance as a proxy for CMAK to Zookeeper.
 
@@ -130,6 +115,18 @@ sed -i '' 's/my-cluster/kafka-cluster/' deploy.yaml
 kubectl apply -f deploy.yaml -n storefront-kafka-project
 ```
 
-## Reference
+## Yolean/kubernetes-kafka (not used)
 
-- <https://minikube.sigs.k8s.io/docs/handbook/accessing/>
+```text
+kubectl delete -f ./minikube/resources/kafka.yaml -n dev
+kubectl delete -f ./minikube/resources/zookeeper.yaml -n dev
+
+# https://github.com/Yolean/kubernetes-kafka
+git clone https://github.com/Yolean/kubernetes-kafka.git && cd kubernetes-kafka
+kubectl apply -f 00-namespace.yml
+kubectl apply -k github.com/Yolean/kubernetes-kafka/variants/dev-small/?ref=v6.0.3
+
+kubectl apply -f rbac-namespace-default
+kubectl apply -f zookeeper
+kubectl apply -f kafka
+```
